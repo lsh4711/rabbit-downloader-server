@@ -1,11 +1,59 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { MemberService } from './member.service';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import type { Request } from 'express';
 import { CreateMemberDto } from './dto/create-member.dto';
 import { UpdateMemberDto } from './dto/update-member.dto';
+import { MemberService } from './member.service';
 
-@Controller('member')
+// class LoginDto {
+//   token: string;
+// }
+
+@Controller('members')
 export class MemberController {
   constructor(private readonly memberService: MemberService) {}
+
+  // @UseGuards(AuthGuard('google'))
+  // @Get('login')
+  // // async login(@Body() { token }: LoginDto) {
+  // async login(@Req() req: Request) {
+  //   //   // const result = await fetch(
+  //   //   //   'https://www.googleapis.com/oauth2/v3/userinfo',
+  //   //   //   { headers: { Authorization: `Bearer ${token}` } },
+  //   //   // ).then((r) => r.json());
+  //   //   //
+  //   //   // console.log(result);
+  //   //   //
+  //   //   // return 'login';
+  // }
+
+  @UseGuards(AuthGuard('oauth-google'))
+  @Get('login')
+  async login() {}
+
+  @UseGuards(AuthGuard('oauth-google'))
+  @Get('callback')
+  async loginUsingCode(@Req() req: Request) {
+    console.log(req['user']);
+    return 'ok';
+  }
+
+  @UseGuards(AuthGuard('oauth-google'))
+  @Get('callback')
+  async loginUsingToken(@Req() req: Request) {
+    console.log(req['user']);
+    return 'ok';
+  }
 
   @Post()
   create(@Body() createMemberDto: CreateMemberDto) {
