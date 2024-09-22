@@ -6,54 +6,62 @@ import {
   Param,
   Patch,
   Post,
-  Req,
-  UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import type { Request } from 'express';
 import { CreateMemberDto } from './dto/create-member.dto';
 import { UpdateMemberDto } from './dto/update-member.dto';
 import { MemberService } from './member.service';
 
-// class LoginDto {
-//   token: string;
-// }
+class LoginDto {
+  token: string;
+}
+
+type GoogleUserInfo = {
+  sub: string;
+  name: string;
+  given_name: string;
+  picture: string;
+  email: string;
+  email_verified: true;
+};
 
 @Controller('members')
 export class MemberController {
   constructor(private readonly memberService: MemberService) {}
 
-  // @UseGuards(AuthGuard('google'))
+  @Post('login')
+  async login(@Body() { token }: LoginDto) {
+    const { email, sub }: GoogleUserInfo = await fetch(
+      'https://www.googleapis.com/oauth2/v3/userinfo',
+      { headers: { Authorization: `Bearer ${token}` } },
+    ).then<GoogleUserInfo>((r) => r.json());
+
+    // const oauthId = `google_${sub}`;
+    // const username = email.replace(/@.+/, '');
+    //
+    // const member: Member = new Member();
+
+    return 'login';
+  }
+
   // @Get('login')
-  // // async login(@Body() { token }: LoginDto) {
-  // async login(@Req() req: Request) {
-  //   //   // const result = await fetch(
-  //   //   //   'https://www.googleapis.com/oauth2/v3/userinfo',
-  //   //   //   { headers: { Authorization: `Bearer ${token}` } },
-  //   //   // ).then((r) => r.json());
-  //   //   //
-  //   //   // console.log(result);
-  //   //   //
-  //   //   // return 'login';
+  // @UseGuards(GoogleOauthGuard)
+  // // @UseGuards(AuthGuard('oauth-google'))
+  // async login() {}
+
+  // @Get('callback')
+  // @UseGuards(GoogleOauthGuard)
+  // // @UseGuards(AuthGuard('oauth-google'))
+  // async loginUsingCode(@Req() req: Request) {
+  //   // console.log(req['user']);
+  //   return 'ok';
   // }
 
-  @UseGuards(AuthGuard('oauth-google'))
-  @Get('login')
-  async login() {}
-
-  @UseGuards(AuthGuard('oauth-google'))
-  @Get('callback')
-  async loginUsingCode(@Req() req: Request) {
-    console.log(req['user']);
-    return 'ok';
-  }
-
-  @UseGuards(AuthGuard('oauth-google'))
-  @Get('callback')
-  async loginUsingToken(@Req() req: Request) {
-    console.log(req['user']);
-    return 'ok';
-  }
+  // @UseGuards(AuthGuard('oauth-google'))
+  // @Get('callback')
+  // async loginUsingToken(@Req() req: Request) {
+  //   console.log(req['user']);
+  //   return 'ok';
+  // }
 
   @Post()
   create(@Body() createMemberDto: CreateMemberDto) {

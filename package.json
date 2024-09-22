@@ -9,7 +9,7 @@
     "start-bun": "bun run --bun src/main.ts",
     "start:dev-bun": " bun --watch run --preload type-checker.ts --bun src/main.ts",
     "start:prod-bun": "bun swagger && bun start-bun",
-    "entity": "bun run --bun mikro-orm generate-entities --save",
+    "entity": "bun mikro-orm generate-entities --save",
     "swagger": "nest start --swagger",
     "_": "--------------------------------------------------",
     "build": "nest build",
