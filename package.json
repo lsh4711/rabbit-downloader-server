@@ -1,6 +1,6 @@
 {
   "name": "rabbit-downloader-server",
-  "version": "0.0.1",
+  "version": "1.12",
   "description": "",
   "author": "",
   "private": true,
@@ -9,6 +9,7 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
+    "start:bun": "bun run --bun src/main.ts",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
