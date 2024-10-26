@@ -1,11 +1,13 @@
-import { MemberRepository } from '@/member/member.repository';
+import { Member } from '@/member/entities/member.entity';
+import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Module } from '@nestjs/common';
 import { MemberController } from './member.controller';
 import { MemberService } from './member.service';
 
 @Module({
+  imports: [MikroOrmModule.forFeature([Member])],
   controllers: [MemberController],
-  providers: [MemberService, MemberRepository],
+  providers: [MemberService],
   exports: [MemberService],
 })
 export class MemberModule {}

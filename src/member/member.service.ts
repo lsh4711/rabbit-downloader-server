@@ -1,16 +1,16 @@
-import { Member } from '@/member/entities/member.entity';
+import { Member, MemberRole } from '@/member/entities/member.entity';
 import { MemberRepository } from '@/member/member.repository';
 import { Transactional } from '@mikro-orm/core';
 import { Injectable } from '@nestjs/common';
-import { UpdateMemberDto } from './dto/update-member.dto';
 
 @Injectable()
 export class MemberService {
   constructor(private readonly memberRepository: MemberRepository) {}
 
+  @Transactional()
   async create(member: Member) {
-    await this.memberRepository.insert(member);
-    return member;
+    member.role = MemberRole.MEMBER;
+    return this.memberRepository.create(member);
   }
 
   findAll() {
@@ -21,7 +21,8 @@ export class MemberService {
     return `This action returns a #${id} member`;
   }
 
-  update(id: number, updateMemberDto: UpdateMemberDto) {
+  // update(id: number, _updateMemberDto: UpdateMemberDto) {
+  update(id: number) {
     return `This action updates a #${id} member`;
   }
 
@@ -35,10 +36,6 @@ export class MemberService {
 
   async findByMemberId(memberId: bigint) {
     return this.memberRepository.findOne({ memberId });
-  }
-
-  manage(member: Member) {
-    this.memberRepository.create(member);
   }
 
   @Transactional()
