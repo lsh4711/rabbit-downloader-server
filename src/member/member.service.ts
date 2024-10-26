@@ -1,3 +1,4 @@
+import { UpdateMemberDto } from '@/member/dto/update-member.dto';
 import { Member, MemberRole } from '@/member/entities/member.entity';
 import { MemberRepository } from '@/member/member.repository';
 import { Transactional } from '@mikro-orm/core';
@@ -21,9 +22,8 @@ export class MemberService {
     return `This action returns a #${id} member`;
   }
 
-  // update(id: number, _updateMemberDto: UpdateMemberDto) {
-  update(id: number) {
-    return `This action updates a #${id} member`;
+  update(id: number, updateMemberDto: UpdateMemberDto) {
+    return `This action updates a #${id} member ${updateMemberDto.constructor.name}`;
   }
 
   remove(id: number) {
