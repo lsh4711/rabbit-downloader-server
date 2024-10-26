@@ -1,4 +1,5 @@
 import { MemberRepository } from '@/member/member.repository';
+import type { MemberPayload } from '@/types/common';
 import {
   Entity,
   Enum,
@@ -7,8 +8,7 @@ import {
   Property,
 } from '@mikro-orm/core';
 
-@Entity()
-// @Entity({ repository: () => MemberRepository })
+@Entity({ repository: () => MemberRepository })
 export class Member {
   [PrimaryKeyProp]?: 'memberId';
 
@@ -16,23 +16,27 @@ export class Member {
   memberId!: bigint;
 
   @Property({ length: 6 })
-  createdAt!: Date;
+  createdAt: Date = new Date();
 
-  @Property({ length: 6 })
-  modifiedAt!: Date;
+  @Property({ length: 6, onUpdate: () => new Date() })
+  modifiedAt: Date = new Date();
 
-  @Property()
+  @Property({ unique: true })
   oauthId!: string;
 
   @Enum({ items: () => MemberRole })
-  role!: MemberRole;
+  role: MemberRole = MemberRole.BLOCK;
 
-  @Property({ unique: 'UK_gc3jmn7c2abyo3wf6syln5t2i' })
+  @Property({ unique: true })
   username!: string;
 
   constructor({ oauthId, username }: { oauthId: string; username: string }) {
     this.oauthId = oauthId;
     this.username = username;
+  }
+
+  toPayload(): MemberPayload {
+    return { memberId: this.memberId, role: this.role };
   }
 }
 

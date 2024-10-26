@@ -22,10 +22,9 @@ export class AuthService {
     const { sub, email } = await this.loadGoogleProfile(token);
     const oauthId = `google_${sub}`;
     const username = email.replace(/@.+/, '');
+    const member = new Member({ oauthId, username });
 
-    return await this.memberService.findOrCreate(
-      new Member({ oauthId, username }),
-    );
+    return await this.memberService.findOrCreate(member);
   }
 
   private async loadGoogleProfile(token: string) {

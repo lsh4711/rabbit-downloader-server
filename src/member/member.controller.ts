@@ -40,5 +40,7 @@ export class MemberController {
 
   @Post('login')
   @UseGuards(AuthGuard('google-token'))
-  login(@Req() req: AuthRequest) {}
+  login(@Req() req: AuthRequest) {
+    console.log(req.user);
+  }
 }
