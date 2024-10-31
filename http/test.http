@@ -1,0 +1,20 @@
+### login
+POST http://localhost:3000/api/members/login
+Content-Type: application/json
+
+{
+  "token": "ya29.a0AeDClZC7_RBahNUhoJZbGABSDnbk8myQ5nkZSSXwoGtlGzNKMtBfH4l8rhthBbGEfO2MioPhxyO9-XijO2GD8F6K5zfJdkfjrRczFGf7bHEQNcqngcMciEMHH8X0FTicxWwedldbTwBHhp3SyQcyd2QtZWsafA8z8BNO44iMaCgYKAf4SARESFQHGX2MiRzzf7wySudeITDWW_78ixA0175"
+}
+
+### postAsk
+POST http://localhost:3000/api/notices/asks/submit
+Cookie: rabbit=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZW1iZXJJZCI6IjEzIiwidXNlcm5hbWUiOiJkb3drd2xsIiwicm9sZSI6Ik1FTUJFUiIsImlhdCI6MTczMDE5OTk1OSwiZXhwIjoxNzMyNzkxOTU5fQ.Iyywqg1qRoBEhIwCWWJ-Qb-RvGTdOjaOnUAcZiTiJCo
+Content-Type: application/json
+
+{
+  "title": "",
+  "content": ""
+}
+
+### test
+GET https://naver.com
