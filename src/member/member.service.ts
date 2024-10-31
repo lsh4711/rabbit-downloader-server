@@ -1,7 +1,6 @@
-import { UpdateMemberDto } from '@/member/dto/update-member.dto';
 import { Member, MemberRole } from '@/member/entities/member.entity';
 import { MemberRepository } from '@/member/member.repository';
-import { Transactional } from '@mikro-orm/core';
+import { type FilterQuery, Transactional } from '@mikro-orm/core';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -12,30 +11,6 @@ export class MemberService {
   async create(member: Member) {
     member.role = MemberRole.MEMBER;
     return this.memberRepository.create(member);
-  }
-
-  findAll() {
-    return `This action returns all members`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} member`;
-  }
-
-  update(id: number, updateMemberDto: UpdateMemberDto) {
-    return `This action updates a #${id} member ${updateMemberDto.constructor.name}`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} member`;
-  }
-
-  async findByOauthId(oauthId: string) {
-    return this.memberRepository.findOne({ oauthId });
-  }
-
-  async findByMemberId(memberId: bigint) {
-    return this.memberRepository.findOne({ memberId });
   }
 
   @Transactional()
@@ -50,7 +25,15 @@ export class MemberService {
     return this.create(member);
   }
 
-  // async flush() {
-  //   await this.memberRepository.getEntityManager().flush();
-  // }
+  async findByOauthId(oauthId: string) {
+    return this.memberRepository.findOne({ oauthId });
+  }
+
+  async findByMemberId(memberId: string) {
+    return this.memberRepository.findOne({ memberId });
+  }
+
+  async exist(where: FilterQuery<Member>) {
+    return this.memberRepository.count(where).then(Boolean);
+  }
 }

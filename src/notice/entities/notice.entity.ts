@@ -1,20 +1,23 @@
-import { Entity, Enum, Index, ManyToOne, PrimaryKey, PrimaryKeyProp, Property } from '@mikro-orm/core';
+import { CustomBaseEntity } from '@/common/custom-base.entity';
 import { Member } from '@/member/entities/member.entity';
+import { NoticeRepository } from '@/notice/notice.repository';
+import {
+  Entity,
+  Enum,
+  Index,
+  ManyToOne,
+  PrimaryKey,
+  PrimaryKeyProp,
+  Property,
+} from '@mikro-orm/core';
 
-@Entity()
+@Entity({ repository: () => NoticeRepository })
 @Index({ name: 'IDXa4kgkrn6a3145pu6radc2n0av', properties: ['member', 'type'] })
-export class Notice {
-
+export class Notice extends CustomBaseEntity {
   [PrimaryKeyProp]?: 'noticeId';
 
-  @PrimaryKey({ unsigned: false })
-  noticeId!: bigint;
-
-  @Property({ length: 6 })
-  createdAt!: Date;
-
-  @Property({ length: 6 })
-  modifiedAt!: Date;
+  @PrimaryKey({ type: 'bigint', unsigned: false })
+  noticeId!: string;
 
   @Property({ length: 5000 })
   content!: string;
@@ -30,7 +33,6 @@ export class Notice {
 
   @ManyToOne({ entity: () => Member, fieldName: 'member_id' })
   member!: Member;
-
 }
 
 export enum NoticeSender {

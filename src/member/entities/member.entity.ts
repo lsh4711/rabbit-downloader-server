@@ -1,3 +1,4 @@
+import { CustomBaseEntity } from '@/common/custom-base.entity';
 import { MemberRepository } from '@/member/member.repository';
 import type { MemberPayload } from '@/types/common';
 import {
@@ -9,34 +10,33 @@ import {
 } from '@mikro-orm/core';
 
 @Entity({ repository: () => MemberRepository })
-export class Member {
+export class Member extends CustomBaseEntity {
   [PrimaryKeyProp]?: 'memberId';
 
-  @PrimaryKey({ unsigned: false })
-  memberId!: bigint;
-
-  @Property({ length: 6 })
-  createdAt: Date = new Date();
-
-  @Property({ length: 6, onUpdate: () => new Date() })
-  modifiedAt: Date = new Date();
+  @PrimaryKey({ type: 'bigint', unsigned: false })
+  memberId!: string;
 
   @Property({ unique: true })
-  oauthId!: string;
+  oauthId: string;
 
   @Enum({ items: () => MemberRole })
   role: MemberRole = MemberRole.BLOCK;
 
   @Property({ unique: true })
-  username!: string;
+  username: string;
 
   constructor({ oauthId, username }: { oauthId: string; username: string }) {
+    super();
     this.oauthId = oauthId;
     this.username = username;
   }
 
   toPayload(): MemberPayload {
-    return { memberId: this.memberId, role: this.role };
+    return {
+      memberId: this.memberId,
+      username: this.username,
+      role: this.role,
+    };
   }
 }
 

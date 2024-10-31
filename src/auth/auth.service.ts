@@ -1,6 +1,8 @@
 import { Member } from '@/member/entities/member.entity';
 import { MemberService } from '@/member/member.service';
-import { Injectable } from '@nestjs/common';
+import type { MemberPayload } from '@/types/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 
 type GoogleProfile = {
   sub: string;
@@ -15,7 +17,7 @@ type GoogleProfile = {
 export class AuthService {
   constructor(
     private readonly memberService: MemberService,
-    // private readonly jwtService: JwtService,
+    private readonly jwtService: JwtService,
   ) {}
 
   async loadGoogleMember(token: string) {
@@ -30,8 +32,20 @@ export class AuthService {
   private async loadGoogleProfile(token: string) {
     return fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
       headers: { Authorization: `Bearer ${token}` },
-    }).then<GoogleProfile>((r) => r.json());
+    }).then<GoogleProfile>(async (r) => {
+      if (!r.ok) {
+        const body = await r.json();
+        throw new UnauthorizedException(body['error_description']);
+      }
+      return r.json();
+    });
   }
 
-  // generateJwt(payload: MemberPayload) {}
+  generateJwt(payload: MemberPayload) {
+    return this.jwtService.sign(payload);
+  }
+
+  async memberAvailable(payload: MemberPayload) {
+    return this.memberService.exist(payload);
+  }
 }

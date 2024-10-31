@@ -1,20 +1,26 @@
-import { Entity, Enum, ManyToOne, PrimaryKey, PrimaryKeyProp, Property, Unique } from '@mikro-orm/core';
+import { BookmarkRepository } from '@/bookmark/bookmark.repository';
+import { CustomBaseEntity } from '@/common/custom-base.entity';
 import { Member } from '@/member/entities/member.entity';
+import {
+  Entity,
+  Enum,
+  ManyToOne,
+  PrimaryKey,
+  PrimaryKeyProp,
+  Property,
+  Unique,
+} from '@mikro-orm/core';
 
-@Entity()
-@Unique({ name: 'UKprl23ytlcgtmpftc8tw32mvpf', properties: ['member', 'contentId'] })
-export class Bookmark {
-
+@Entity({ repository: () => BookmarkRepository })
+@Unique({
+  name: 'UKprl23ytlcgtmpftc8tw32mvpf',
+  properties: ['member', 'contentId'],
+})
+export class Bookmark extends CustomBaseEntity {
   [PrimaryKeyProp]?: 'bookmarkId';
 
-  @PrimaryKey({ unsigned: false })
-  bookmarkId!: bigint;
-
-  @Property({ length: 6 })
-  createdAt!: Date;
-
-  @Property({ length: 6 })
-  modifiedAt!: Date;
+  @PrimaryKey({ type: 'bigint', unsigned: false })
+  bookmarkId!: string;
 
   @Property()
   contentId!: bigint;
@@ -45,7 +51,6 @@ export class Bookmark {
 
   @ManyToOne({ entity: () => Member, fieldName: 'member_id' })
   member!: Member;
-
 }
 
 export enum BookmarkType {

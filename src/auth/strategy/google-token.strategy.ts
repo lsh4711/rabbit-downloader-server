@@ -1,15 +1,14 @@
 import { AuthService } from '@/auth/auth.service';
 import type { MemberPayload } from '@/types/common';
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { PassportStrategy } from '@nestjs/passport';
+import { AuthGuard, PassportStrategy } from '@nestjs/passport';
 import type { Request } from 'express';
 import { Strategy } from 'passport-custom';
 
+const name = 'google-token';
+
 @Injectable()
-export class GoogleTokenStrategy extends PassportStrategy(
-  Strategy,
-  'google-token',
-) {
+export class GoogleTokenStrategy extends PassportStrategy(Strategy, name) {
   constructor(private readonly authService: AuthService) {
     super();
   }
@@ -26,3 +25,5 @@ export class GoogleTokenStrategy extends PassportStrategy(
     return member.toPayload();
   }
 }
+
+export class GoogleTokenAuthGuard extends AuthGuard(name) {}

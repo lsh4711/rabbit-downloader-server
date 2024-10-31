@@ -1,46 +1,34 @@
-import type { AuthRequest } from '@/types/common';
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-  Req,
-  UseGuards,
-} from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import { UpdateMemberDto } from './dto/update-member.dto';
+import { AuthService } from '@/auth/auth.service';
+import { GoogleTokenAuthGuard } from '@/auth/strategy/google-token.strategy';
+import { Public } from '@/decorators/public.decorator';
+import { User } from '@/decorators/user.decorator';
+import { ResponseMemberDto } from '@/member/dto/response-member.dto';
+import type { MemberPayload } from '@/types/common';
+import { Controller, Post, Res, UseGuards } from '@nestjs/common';
+import { plainToInstance } from 'class-transformer';
+import type { Response } from 'express';
 import { MemberService } from './member.service';
 
 @Controller('members')
 export class MemberController {
-  constructor(private readonly membersService: MemberService) {}
+  constructor(
+    private readonly memberService: MemberService,
+    private readonly authService: AuthService,
+  ) {}
 
-  @Get()
-  findAll() {
-    return this.membersService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.membersService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMemberDto: UpdateMemberDto) {
-    return this.membersService.update(+id, updateMemberDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.membersService.remove(+id);
-  }
-
+  @Public({ skipAuth: true })
   @Post('login')
-  @UseGuards(AuthGuard('google-token'))
-  login(@Req() req: AuthRequest) {
-    console.log(req.user);
+  @UseGuards(GoogleTokenAuthGuard)
+  async login(
+    @User() payload: MemberPayload,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const jwt = this.authService.generateJwt(payload);
+    const member = (await this.memberService.findByMemberId(payload.memberId))!;
+
+    res.status(200);
+    res.setHeader('authorization', `Bearer ${jwt}`);
+
+    return plainToInstance(ResponseMemberDto, member);
   }
 }
