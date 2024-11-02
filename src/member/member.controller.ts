@@ -27,7 +27,7 @@ export class MemberController {
     const member = (await this.memberService.findByMemberId(payload.memberId))!;
 
     res.status(200);
-    res.setHeader('authorization', `Bearer ${jwt}`);
+    res.setHeader('authorization', jwt);
 
     return plainToInstance(ResponseMemberDto, member);
   }

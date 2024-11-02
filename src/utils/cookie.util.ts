@@ -12,6 +12,6 @@ export class CookieUtil {
   }
 
   static extractJwtFromCookies(cookies: Record<string, string | undefined>) {
-    return cookies[this.jwtKey]?.replace('Bearer ', '');
+    return cookies[this.jwtKey];
   }
 }

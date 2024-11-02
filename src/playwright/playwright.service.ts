@@ -8,7 +8,7 @@ import {
 } from 'playwright';
 
 export class PlaywrightService {
-  private readonly headless: boolean = false;
+  private readonly headless: boolean = true;
   private readonly javaScriptEnabled: boolean = false;
   private readonly offline: boolean = true;
 
