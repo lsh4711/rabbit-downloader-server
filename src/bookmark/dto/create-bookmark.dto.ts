@@ -1,20 +1,31 @@
-import { Bookmark, BookmarkType } from '@/bookmark/entities/bookmark.entity';
 import {
+  Bookmark,
+  BookmarkProgress,
+  BookmarkType,
+} from '@/bookmark/entities/bookmark.entity';
+import { Member } from '@/member/entities/member.entity';
+import { AuthContext } from '@/utils/auth-context.util';
+import { rel } from '@mikro-orm/core';
+import { plainToInstance, Transform, Type } from 'class-transformer';
+import {
+  IsEnum,
   IsNotEmpty,
   IsNumber,
-  IsNumberString,
+  IsOptional,
   IsString,
+  ValidateNested,
 } from 'class-validator';
 
 export class CreateBookmarkDto {
-  @IsNumberString()
-  contentId!: string;
+  @IsNumber()
+  contentId!: number;
 
   @IsString()
   @IsNotEmpty()
   title!: string;
 
-  @IsNotEmpty()
+  @IsEnum(BookmarkType)
+  @Transform((params) => params.value.toUpperCase())
   type!: BookmarkType;
 
   @IsString()
@@ -22,14 +33,19 @@ export class CreateBookmarkDto {
   path!: string;
 
   @IsString()
-  @IsNotEmpty()
   imagePath!: string;
 
   @IsNumber()
-  @IsNotEmpty()
   lastIndex!: number;
 
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => BookmarkProgress)
+  progress?: BookmarkProgress;
+
   toEntity() {
-    return new Bookmark();
+    const bookmark = plainToInstance(Bookmark, this);
+    bookmark.member = rel(Member, AuthContext.find('memberId'));
+    return bookmark;
   }
 }

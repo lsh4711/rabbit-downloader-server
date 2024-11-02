@@ -1,4 +1,4 @@
-import { CustomBaseEntity } from '@/common/custom-base.entity';
+import { CommonBaseEntity } from '@/common/common-base.entity';
 import { Member } from '@/member/entities/member.entity';
 import { NoticeRepository } from '@/notice/notice.repository';
 import {
@@ -13,7 +13,7 @@ import {
 
 @Entity({ repository: () => NoticeRepository })
 @Index({ name: 'IDXa4kgkrn6a3145pu6radc2n0av', properties: ['member', 'type'] })
-export class Notice extends CustomBaseEntity {
+export class Notice extends CommonBaseEntity {
   [PrimaryKeyProp]?: 'noticeId';
 
   @PrimaryKey({ type: 'bigint', unsigned: false })

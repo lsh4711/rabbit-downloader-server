@@ -1,4 +1,4 @@
+import { CommonRepository } from '@/common/common.repository';
 import { Member } from '@/member/entities/member.entity';
-import { EntityRepository } from '@mikro-orm/mysql';
 
-export class MemberRepository extends EntityRepository<Member> {}
+export class MemberRepository extends CommonRepository<Member> {}

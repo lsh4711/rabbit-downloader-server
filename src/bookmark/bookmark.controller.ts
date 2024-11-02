@@ -1,46 +1,65 @@
+import { ResponseBookmarkDto } from '@/bookmark/dto/response-bookmark.dto';
+import { UpdateBookmarkDto } from '@/bookmark/dto/update-bookmark.dto';
+import { Permission } from '@/decorators/permission.decorator';
+import { UriCreator } from '@/utils/uri-creator.util';
 import {
   Body,
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   Patch,
   Post,
+  Res,
 } from '@nestjs/common';
+import { plainToInstance } from 'class-transformer';
+import type { Response } from 'express';
 import { BookmarkService } from './bookmark.service';
 import { CreateBookmarkDto } from './dto/create-bookmark.dto';
-import { UpdateBookmarkDto } from './dto/update-bookmark.dto';
 
-@Controller('bookmarks')
+const domain = 'bookmarks';
+
+@Permission(['MEMBER'])
+@Controller(domain)
 export class BookmarkController {
   constructor(private readonly bookmarkService: BookmarkService) {}
 
   @Post('submit')
-  create(@Body() createBookmarkDto: CreateBookmarkDto) {
-    return this.bookmarkService.create(createBookmarkDto);
+  async postBookmark(
+    @Body() dto: CreateBookmarkDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const bookmark = dto.toEntity();
+
+    await this.bookmarkService.create(bookmark);
+
+    res.location(UriCreator.create(domain, bookmark.bookmarkId));
+    return plainToInstance(ResponseBookmarkDto, bookmark);
+  }
+
+  @Delete(':id/delete')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async deleteBookmark(@Param('id') bookmarkId: string) {
+    await this.bookmarkService.delete(bookmarkId);
   }
 
   @Get()
-  findAll() {
-    // return this.bookmarkService.findAll();
-    return [];
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.bookmarkService.findOne(+id);
+  async getBookmarks() {
+    const bookmarks = await this.bookmarkService.findBookmarks();
+    return plainToInstance(ResponseBookmarkDto, bookmarks);
   }
 
   @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateBookmarkDto: UpdateBookmarkDto,
+  async patchBookmark(
+    @Param('id') bookmarkId: string,
+    @Body() { lastIndex, progress }: UpdateBookmarkDto,
   ) {
-    return this.bookmarkService.update(+id, updateBookmarkDto);
-  }
+    if (!lastIndex && !progress) {
+      return;
+    }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.bookmarkService.remove(+id);
+    await this.bookmarkService.updateProgress(bookmarkId, lastIndex, progress);
   }
 }

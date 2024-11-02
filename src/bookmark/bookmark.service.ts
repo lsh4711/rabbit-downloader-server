@@ -1,26 +1,47 @@
+import { BookmarkRepository } from '@/bookmark/bookmark.repository';
+import {
+  Bookmark,
+  BookmarkProgress,
+} from '@/bookmark/entities/bookmark.entity';
+import { AuthContext } from '@/utils/auth-context.util';
+import { Transactional } from '@mikro-orm/core';
 import { Injectable } from '@nestjs/common';
-import { CreateBookmarkDto } from './dto/create-bookmark.dto';
-import { UpdateBookmarkDto } from './dto/update-bookmark.dto';
 
 @Injectable()
 export class BookmarkService {
-  create(createBookmarkDto: CreateBookmarkDto) {
-    return 'This action adds a new bookmark';
+  constructor(private readonly bookmarkRepository: BookmarkRepository) {}
+
+  @Transactional()
+  async create(bookmark: Bookmark) {
+    return this.bookmarkRepository.create(bookmark);
   }
 
-  findAll() {
-    return `This action returns all bookmark`;
+  @Transactional()
+  async delete(bookmarkId: string) {
+    const memberId = AuthContext.find('memberId');
+    await this.bookmarkRepository.nativeDelete({
+      bookmarkId,
+      member: { memberId },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} bookmark`;
+  async findBookmarks() {
+    const memberId = AuthContext.find('memberId');
+    return this.bookmarkRepository.findAll({
+      where: { member: { memberId } },
+      orderBy: { bookmarkId: 'asc' },
+    });
   }
 
-  update(id: number, updateBookmarkDto: UpdateBookmarkDto) {
-    return `This action updates a #${id} bookmark`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} bookmark`;
+  async updateProgress(
+    bookmarkId: string,
+    lastIndex?: number,
+    progress?: BookmarkProgress,
+  ) {
+    const memberId = AuthContext.find('memberId');
+    await this.bookmarkRepository.nativeUpdateIgnoreUndefined(
+      { bookmarkId, member: { memberId } },
+      { lastIndex, progress },
+    );
   }
 }

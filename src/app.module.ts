@@ -6,6 +6,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BookmarkModule } from './bookmark/bookmark.module';
+import { DownloadModule } from './download/download.module';
 import { MemberModule } from './member/member.module';
 import { NoticeModule } from './notice/notice.module';
 
@@ -17,6 +18,7 @@ import { NoticeModule } from './notice/notice.module';
     MemberModule,
     NoticeModule,
     BookmarkModule,
+    DownloadModule,
   ],
   controllers: [AppController],
   providers: [
@@ -28,7 +30,6 @@ import { NoticeModule } from './notice/notice.module';
         forbidNonWhitelisted: true,
         forbidUnknownValues: true,
         transform: true,
-
         // disableErrorMessages: true
       }),
     },

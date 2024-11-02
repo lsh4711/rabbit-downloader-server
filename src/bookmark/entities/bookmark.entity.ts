@@ -1,7 +1,9 @@
 import { BookmarkRepository } from '@/bookmark/bookmark.repository';
-import { CustomBaseEntity } from '@/common/custom-base.entity';
+import { CommonBaseEntity } from '@/common/common-base.entity';
 import { Member } from '@/member/entities/member.entity';
 import {
+  Embeddable,
+  Embedded,
   Entity,
   Enum,
   ManyToOne,
@@ -10,38 +12,55 @@ import {
   Property,
   Unique,
 } from '@mikro-orm/core';
+import { Exclude, Expose } from 'class-transformer';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+
+@Exclude()
+@Embeddable()
+export class BookmarkProgress {
+  @Expose()
+  @IsNumber()
+  @Property()
+  progressIndex!: number;
+
+  @Expose()
+  @IsString()
+  @IsNotEmpty()
+  @Property()
+  progressPath!: string;
+
+  @Expose()
+  @IsString()
+  @IsNotEmpty()
+  @Property()
+  progressTitle!: string;
+}
 
 @Entity({ repository: () => BookmarkRepository })
 @Unique({
   name: 'UKprl23ytlcgtmpftc8tw32mvpf',
   properties: ['member', 'contentId'],
 })
-export class Bookmark extends CustomBaseEntity {
+export class Bookmark extends CommonBaseEntity {
   [PrimaryKeyProp]?: 'bookmarkId';
 
   @PrimaryKey({ type: 'bigint', unsigned: false })
   bookmarkId!: string;
 
   @Property()
-  contentId!: bigint;
+  contentId!: number;
 
   @Property()
   imagePath!: string;
 
-  @Property({ nullable: true })
-  lastIndex?: bigint;
+  @Property()
+  lastIndex!: number;
 
   @Property()
   path!: string;
 
-  @Property({ nullable: true })
-  progressIndex?: bigint;
-
-  @Property({ nullable: true })
-  progressPath?: string;
-
-  @Property({ nullable: true })
-  progressTitle?: string;
+  @Embedded({ nullable: true, prefix: false })
+  progress?: BookmarkProgress;
 
   @Property()
   title!: string;

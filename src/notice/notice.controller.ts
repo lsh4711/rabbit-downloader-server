@@ -4,6 +4,7 @@ import {
   ResponseNoticeData,
   ResponseNoticeDtoForAdmin,
 } from '@/notice/dto/response-notice.dto';
+import { UriCreator } from '@/utils/uri-creator.util';
 import { Body, Controller, Get, Post, Query, Res } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import type { Response } from 'express';
@@ -30,7 +31,7 @@ export class NoticeController {
 
     await this.noticeService.create(notice);
 
-    res.location(`${domain}/${notice.noticeId}`);
+    res.location(UriCreator.create(domain, notice.noticeId));
   }
 
   @Permission(['ADMIN'])
@@ -43,7 +44,7 @@ export class NoticeController {
 
     await this.noticeService.create(notice);
 
-    res.location(`${domain}/${notice.noticeId}`);
+    res.location(UriCreator.create(domain, notice.noticeId));
   }
 
   @Permission(['ADMIN'])
@@ -56,13 +57,13 @@ export class NoticeController {
 
     await this.noticeService.create(notice);
 
-    res.location(`${domain}/${notice.noticeId}`);
+    res.location(UriCreator.create(domain, notice.noticeId));
   }
 
   @Public()
   @Get()
   async getNotices(@Query('notice-id') lastNoticeId: string) {
-    const notices = await this.noticeService.getNotices(lastNoticeId);
+    const notices = await this.noticeService.findNotices(lastNoticeId);
     return plainToInstance(ResponseNoticeData, {
       notices,
       lastNoticeId: notices[notices.length - 1]?.noticeId || lastNoticeId,
@@ -73,7 +74,7 @@ export class NoticeController {
   @Permission(['ADMIN'])
   @Get('admin')
   async getNoticesForAdmin() {
-    const notices = await this.noticeService.getNoticesForAdmin();
+    const notices = await this.noticeService.findNoticesForAdmin();
     return plainToInstance(ResponseNoticeDtoForAdmin, notices);
   }
 }

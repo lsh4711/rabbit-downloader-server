@@ -1,4 +1,4 @@
-import { CustomBaseEntity } from '@/common/custom-base.entity';
+import { CommonBaseEntity } from '@/common/common-base.entity';
 import { MemberRepository } from '@/member/member.repository';
 import type { MemberPayload } from '@/types/common';
 import {
@@ -10,7 +10,7 @@ import {
 } from '@mikro-orm/core';
 
 @Entity({ repository: () => MemberRepository })
-export class Member extends CustomBaseEntity {
+export class Member extends CommonBaseEntity {
   [PrimaryKeyProp]?: 'memberId';
 
   @PrimaryKey({ type: 'bigint', unsigned: false })

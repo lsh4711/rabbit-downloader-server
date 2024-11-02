@@ -29,7 +29,6 @@ export class ResponseBookmarkDto {
   lastIndex!: number;
 
   @Expose()
-  @Transform((params) => params.value || undefined)
   @Type(() => BookmarkProgress)
   progress!: BookmarkProgress;
 }

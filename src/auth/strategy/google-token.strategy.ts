@@ -1,6 +1,11 @@
 import { AuthService } from '@/auth/auth.service';
+import { MemberRole } from '@/member/entities/member.entity';
 import type { MemberPayload } from '@/types/common';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { AuthGuard, PassportStrategy } from '@nestjs/passport';
 import type { Request } from 'express';
 import { Strategy } from 'passport-custom';
@@ -21,6 +26,10 @@ export class GoogleTokenStrategy extends PassportStrategy(Strategy, name) {
     }
 
     const member = await this.authService.loadGoogleMember(token);
+
+    if (member.role === MemberRole.BLOCK) {
+      throw new UnauthorizedException();
+    }
 
     return member.toPayload();
   }

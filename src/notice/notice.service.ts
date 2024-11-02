@@ -1,3 +1,4 @@
+import { Time } from '@/decorators/time.decorator';
 import { type Notice, NoticeType } from '@/notice/entities/notice.entity';
 import { NoticeStatusRepository } from '@/notice/notice-status.repository';
 import { NoticeRepository } from '@/notice/notice.repository';
@@ -22,8 +23,9 @@ export class NoticeService {
   ) {}
 
   @Timeout(0)
-  private initCommonNotices() {
-    this.refreshCommonNotices();
+  @Time('common notices initialized')
+  private async initCommonNotices() {
+    await this.refreshCommonNotices();
   }
 
   @Cron(CronExpression.EVERY_5_MINUTES)
@@ -49,7 +51,7 @@ export class NoticeService {
     return this.noticeRepository.create(notice);
   }
 
-  private async getNoticeStatus(memberId?: string) {
+  private async findNoticeStatus(memberId?: string) {
     if (!memberId) {
       return undefined;
     }
@@ -72,9 +74,9 @@ export class NoticeService {
     return notices.reverse();
   }
 
-  async getNotices(lastNoticeId: string) {
+  async findNotices(lastNoticeId: string) {
     const memberId = AuthContext.find('memberId', true);
-    const noticeStatus = await this.getNoticeStatus(memberId);
+    const noticeStatus = await this.findNoticeStatus(memberId);
     const notices = this.getCommonNotices(lastNoticeId);
 
     if (
@@ -99,7 +101,7 @@ export class NoticeService {
     return notices;
   }
 
-  async getNoticesForAdmin() {
+  async findNoticesForAdmin() {
     return this.noticeRepository.findAll({
       populate: ['member'],
       where: { type: NoticeType.ASK },
