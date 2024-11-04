@@ -1,3 +1,4 @@
+import config from '@/mikro-orm.config';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Module, ValidationPipe } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
@@ -10,7 +11,7 @@ import { DownloadModule } from './download/download.module';
 import { MemberModule } from './member/member.module';
 import { NoticeModule } from './notice/notice.module';
 
-export const mikroOrmModule = MikroOrmModule.forRoot();
+export const mikroOrmModule = MikroOrmModule.forRoot(config);
 
 @Module({
   imports: [
