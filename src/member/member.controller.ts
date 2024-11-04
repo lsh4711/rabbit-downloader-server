@@ -23,7 +23,7 @@ export class MemberController {
     @User() payload: MemberPayload,
     @Res({ passthrough: true }) res: Response,
   ) {
-    const jwt = this.authService.generateJwt(payload);
+    const jwt = await this.authService.generateJwt(payload);
     const member = (await this.memberService.findByMemberId(payload.memberId))!;
 
     res.status(200);

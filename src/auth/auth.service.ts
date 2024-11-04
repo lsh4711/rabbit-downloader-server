@@ -42,7 +42,7 @@ export class AuthService {
   }
 
   generateJwt(payload: MemberPayload) {
-    return this.jwtService.sign(payload);
+    return this.jwtService.signAsync(payload);
   }
 
   async memberAvailable(payload: MemberPayload) {

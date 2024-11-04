@@ -33,6 +33,7 @@ export class NoticeService {
   private async refreshCommonNotices() {
     this.commonNotices = await this.noticeRepository.findAll({
       where: { type: { $in: this.commonNoticeTypes } },
+      logging: { enabled: false },
     });
   }
 

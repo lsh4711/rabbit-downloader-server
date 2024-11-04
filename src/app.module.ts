@@ -3,7 +3,6 @@ import { Module, ValidationPipe } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_PIPE } from '@nestjs/core';
 import { ScheduleModule } from '@nestjs/schedule';
-import config from '../mikro-orm.config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BookmarkModule } from './bookmark/bookmark.module';
@@ -11,9 +10,11 @@ import { DownloadModule } from './download/download.module';
 import { MemberModule } from './member/member.module';
 import { NoticeModule } from './notice/notice.module';
 
+export const mikroOrmModule = MikroOrmModule.forRoot();
+
 @Module({
   imports: [
-    MikroOrmModule.forRoot(config),
+    mikroOrmModule,
     ConfigModule.forRoot(),
     ScheduleModule.forRoot(),
     MemberModule,
