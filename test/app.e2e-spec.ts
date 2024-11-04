@@ -1,6 +1,8 @@
+import { AppModule, mikroOrmModule } from '@/app.module';
 import { AuthService } from '@/auth/auth.service';
 import { Member, MemberRole } from '@/member/entities/member.entity';
 import { MemberService } from '@/member/member.service';
+import { testMikroOrmConfig } from '@/mikro-orm.config';
 import type { MemberPayload } from '@/types/common';
 import { MikroORM, RequestContext } from '@mikro-orm/mysql';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
@@ -8,8 +10,6 @@ import { HttpStatus, INestApplication } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import request from 'supertest';
-import { testMikroOrmConfig } from '../mikro-orm.config';
-import { AppModule, mikroOrmModule } from './../src/app.module';
 import restoreAllMocks = jest.restoreAllMocks;
 import spyOn = jest.spyOn;
 
