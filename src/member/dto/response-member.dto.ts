@@ -1,4 +1,4 @@
-import type { MemberRole } from '@/member/entities/member.entity';
+import { MemberRole } from '@/member/entities/member.entity';
 import { Exclude, Expose } from 'class-transformer';
 
 @Exclude()

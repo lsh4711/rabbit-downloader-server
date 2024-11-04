@@ -1,5 +1,5 @@
 import { ResponseMemberDto } from '@/member/dto/response-member.dto';
-import { NoticeSender, type NoticeType } from '@/notice/entities/notice.entity';
+import { NoticeSender, NoticeType } from '@/notice/entities/notice.entity';
 import { Exclude, Expose, Type } from 'class-transformer';
 
 @Exclude()
