@@ -1,3 +1,4 @@
+import { EnvUtil } from '@/utils/env.util';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Module, ValidationPipe } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
@@ -10,12 +11,13 @@ import { DownloadModule } from './download/download.module';
 import { MemberModule } from './member/member.module';
 import { NoticeModule } from './notice/notice.module';
 
-export const mikroOrmModule = MikroOrmModule.forRoot();
-
 @Module({
   imports: [
-    mikroOrmModule,
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ envFilePath: EnvUtil.getDotEnvPath() }),
+    MikroOrmModule.forRootAsync({
+      useFactory: () =>
+        import(EnvUtil.getMikroOrmConfigPath('../')).then((i) => i.default),
+    }),
     ScheduleModule.forRoot(),
     MemberModule,
     NoticeModule,

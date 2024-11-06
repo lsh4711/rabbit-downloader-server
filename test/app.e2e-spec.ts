@@ -1,17 +1,14 @@
-import { AppModule, mikroOrmModule } from '@/app.module';
+import { AppModule } from '@/app.module';
 import { AuthService } from '@/auth/auth.service';
 import { Member, MemberRole } from '@/member/entities/member.entity';
 import { MemberService } from '@/member/member.service';
-import { testMikroOrmConfig } from '@/mikro-orm.config';
 import type { MemberPayload } from '@/types/common';
-import { MikroORM, RequestContext } from '@mikro-orm/mysql';
-import { MikroOrmModule } from '@mikro-orm/nestjs';
+import { TestUtil } from '@/utils/test.util';
+import { MikroORM } from '@mikro-orm/mysql';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import request from 'supertest';
-import restoreAllMocks = jest.restoreAllMocks;
-import spyOn = jest.spyOn;
 
 let app: INestApplication;
 let orm: MikroORM;
@@ -21,21 +18,20 @@ let token: string;
 beforeAll(async () => {
   moduleRef = await Test.createTestingModule({
     imports: [AppModule],
-  })
-    .overrideModule(mikroOrmModule)
-    .useModule(MikroOrmModule.forRoot(testMikroOrmConfig))
-    .compile();
-
+  }).compile();
   app = moduleRef.createNestApplication();
   orm = app.get(MikroORM);
+
   await orm.schema.refreshDatabase();
-  token = await generateToken(app);
+  token = await TestUtil.generateTestToken(app);
 
   await app.init();
+
+  // Wait common notice and playwright init.
   await new Promise((resolve) => setTimeout(resolve, 1000));
 });
 
-afterEach(restoreAllMocks);
+beforeEach(jest.restoreAllMocks);
 
 afterAll(async () => {
   await orm.schema.dropDatabase();
@@ -43,15 +39,6 @@ afterAll(async () => {
   await moduleRef.close();
   await app.close();
 });
-
-const generateToken = async (app: INestApplication) => {
-  const next = () =>
-    app
-      .get(MemberService)
-      .findOrCreate(new Member({ oauthId: 'test1', username: 'test1' }));
-  const member = await RequestContext.create(orm.em, next);
-  return app.get(AuthService).generateJwt(member.toPayload());
-};
 
 describe('DownloadController', () => {
   test('should return parsed text', async () => {
@@ -113,7 +100,10 @@ describe('MemberController', () => {
     });
 
     const testToken = 'test-token';
-    const loadGoogleMember = spyOn(app.get(AuthService), 'loadGoogleMember');
+    const loadGoogleMember = jest.spyOn(
+      app.get(AuthService),
+      'loadGoogleMember',
+    );
 
     const blockedMember = new Member({ oauthId: 'block', username: 'block' });
     blockedMember.role = MemberRole.BLOCK;
@@ -134,10 +124,9 @@ describe('MemberController', () => {
     member.memberId = '2';
     member.role = MemberRole.MEMBER;
     loadGoogleMember.mockResolvedValue(member);
-    const findByMemberId = spyOn(
-      app.get(MemberService),
-      'findByMemberId',
-    ).mockResolvedValue(member);
+    const findByMemberId = jest
+      .spyOn(app.get(MemberService), 'findByMemberId')
+      .mockResolvedValue(member);
 
     const res3 = await request(app.getHttpServer())
       .post('/members/login')
