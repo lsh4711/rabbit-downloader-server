@@ -3,8 +3,7 @@ import { defineConfig } from '@mikro-orm/mysql';
 
 export default defineConfig({
   forceUndefined: true,
-  entities: ['dist/**/entities/*.entity.js'],
-  entitiesTs: ['src/**/entities/*.entity.ts'],
+  entities: ['dist/src/*/entities/*.entity.js'],
 
   debug: ['query', 'query-params'],
   highlighter: customSqlHighlighter,
