@@ -1,9 +1,9 @@
-import { BookmarkRepository } from '@/bookmark/bookmark.repository';
+import { BookmarkRepository } from '#@/bookmark/bookmark.repository';
 import {
   Bookmark,
   BookmarkProgress,
-} from '@/bookmark/entities/bookmark.entity';
-import { AuthContext } from '@/utils/auth-context.util';
+} from '#@/bookmark/entities/bookmark.entity';
+import { AuthContext } from '#@/utils/auth-context.util';
 import { Transactional } from '@mikro-orm/core';
 import { Injectable } from '@nestjs/common';
 

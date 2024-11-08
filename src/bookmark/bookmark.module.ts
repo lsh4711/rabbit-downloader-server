@@ -1,4 +1,4 @@
-import { Bookmark } from '@/bookmark/entities/bookmark.entity';
+import { Bookmark } from '#@/bookmark/entities/bookmark.entity';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Module } from '@nestjs/common';
 import { BookmarkController } from './bookmark.controller';

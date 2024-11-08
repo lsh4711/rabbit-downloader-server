@@ -1,6 +1,6 @@
-import { CommonBaseEntity } from '@/common/common-base.entity';
-import { MemberRepository } from '@/member/member.repository';
-import type { MemberPayload } from '@/types/common';
+import { CommonBaseEntity } from '#@/common/common-base.entity';
+import { MemberRepository } from '#@/member/member.repository';
+import type { MemberPayload } from '#@/types/common';
 import {
   Entity,
   Enum,

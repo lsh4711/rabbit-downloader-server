@@ -1,4 +1,4 @@
-import { Time } from '@/decorators/time.decorator';
+import { Time } from '#@/decorators/time.decorator';
 import { Timeout } from '@nestjs/schedule';
 import {
   type Browser,

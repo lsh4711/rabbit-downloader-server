@@ -1,4 +1,4 @@
-import type { MemberPayload } from '@/types/common';
+import type { MemberPayload } from '#@/types/common';
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import type { Request } from 'express';
 

@@ -2,9 +2,9 @@ import {
   Bookmark,
   BookmarkProgress,
   BookmarkType,
-} from '@/bookmark/entities/bookmark.entity';
-import { Member } from '@/member/entities/member.entity';
-import { AuthContext } from '@/utils/auth-context.util';
+} from '#@/bookmark/entities/bookmark.entity';
+import { Member } from '#@/member/entities/member.entity';
+import { AuthContext } from '#@/utils/auth-context.util';
 import { rel } from '@mikro-orm/core';
 import { plainToInstance, Transform, Type } from 'class-transformer';
 import {

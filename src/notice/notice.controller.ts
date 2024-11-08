@@ -1,10 +1,10 @@
-import { Permission } from '@/decorators/permission.decorator';
-import { Public } from '@/decorators/public.decorator';
+import { Permission } from '#@/decorators/permission.decorator';
+import { Public } from '#@/decorators/public.decorator';
 import {
   ResponseNoticeData,
   ResponseNoticeDtoForAdmin,
-} from '@/notice/dto/response-notice.dto';
-import { UriCreator } from '@/utils/uri-creator.util';
+} from '#@/notice/dto/response-notice.dto';
+import { UriCreator } from '#@/utils/uri-creator.util';
 import { Body, Controller, Get, Post, Query, Res } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import type { Response } from 'express';

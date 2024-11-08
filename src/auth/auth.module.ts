@@ -1,7 +1,7 @@
-import { AuthService } from '@/auth/auth.service';
-import { GoogleTokenStrategy } from '@/auth/strategy/google-token.strategy';
-import { JwtAuthGuard, JwtStrategy } from '@/auth/strategy/jwt.strategy';
-import { MemberModule } from '@/member/member.module';
+import { AuthService } from '#@/auth/auth.service';
+import { GoogleTokenStrategy } from '#@/auth/strategy/google-token.strategy';
+import { JwtAuthGuard, JwtStrategy } from '#@/auth/strategy/jwt.strategy';
+import { MemberModule } from '#@/member/member.module';
 import { forwardRef, Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';

@@ -1,4 +1,4 @@
-import { ObjectUtil } from '@/utils/object.util';
+import { ObjectUtil } from '#@/utils/object.util';
 import { EntityRepository } from '@mikro-orm/mysql';
 
 export class CommonRepository<T extends object> extends EntityRepository<T> {

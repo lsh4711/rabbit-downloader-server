@@ -1,5 +1,5 @@
-import { Member, MemberRole } from '@/member/entities/member.entity';
-import { MemberRepository } from '@/member/member.repository';
+import { Member, MemberRole } from '#@/member/entities/member.entity';
+import { MemberRepository } from '#@/member/member.repository';
 import { type FilterQuery, Transactional } from '@mikro-orm/core';
 import { Injectable } from '@nestjs/common';
 

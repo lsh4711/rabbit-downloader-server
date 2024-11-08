@@ -1,6 +1,6 @@
-import { AuthService } from '@/auth/auth.service';
-import { MemberRole } from '@/member/entities/member.entity';
-import type { MemberPayload } from '@/types/common';
+import { AuthService } from '#@/auth/auth.service';
+import { MemberRole } from '#@/member/entities/member.entity';
+import type { MemberPayload } from '#@/types/common';
 import {
   BadRequestException,
   Injectable,

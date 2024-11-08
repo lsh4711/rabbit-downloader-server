@@ -1,3 +1,5 @@
+import type { Options } from '@mikro-orm/core';
+
 export class EnvUtil {
   private static baseDir = 'env';
   private static envFileName = `.env`;
@@ -23,8 +25,15 @@ export class EnvUtil {
     return `${prefix}${this.getCurrentEnvDir()}/${this.envFileName}`;
   }
 
-  static getMikroOrmConfigPath(prefix: string = '') {
+  private static getMikroOrmConfigPath(prefix: string = '../../') {
     return `${prefix}${this.getCurrentEnvDir()}/${this.mikroOrmConfigFileName}`;
+  }
+
+  static async importMikroOrmConfig(prefix?: string): Promise<Options> {
+    // use require to run test without node flag
+    // and load both extension .js and .ts without any settings.
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    return require(EnvUtil.getMikroOrmConfigPath(prefix)).default;
   }
 
   private static getCurrentEnvDir() {

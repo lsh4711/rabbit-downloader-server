@@ -1,6 +1,6 @@
-import { CommonBaseEntity } from '@/common/common-base.entity';
-import { Member } from '@/member/entities/member.entity';
-import { NoticeRepository } from '@/notice/notice.repository';
+import { CommonBaseEntity } from '#@/common/common-base.entity';
+import { Member } from '#@/member/entities/member.entity';
+import { NoticeRepository } from '#@/notice/notice.repository';
 import {
   Entity,
   Enum,

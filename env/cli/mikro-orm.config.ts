@@ -13,7 +13,7 @@ export default defineConfig({
     onImport: (alias) => {
       return {
         name: alias,
-        path: `@/${toKebabCase(alias)}/entities/${toKebabCase(alias)}.entity`,
+        path: `#@/${toKebabCase(alias)}/entities/${toKebabCase(alias)}.entity`,
       };
     },
   },

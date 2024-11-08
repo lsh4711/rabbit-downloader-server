@@ -1,4 +1,4 @@
-import type { MemberPayload } from '@/types/common';
+import type { MemberPayload } from '#@/types/common';
 import { UnauthorizedException } from '@nestjs/common';
 import { AsyncLocalStorage } from 'async_hooks';
 

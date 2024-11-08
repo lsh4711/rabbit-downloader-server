@@ -1,6 +1,6 @@
-import { Member } from '@/member/entities/member.entity';
-import { MemberService } from '@/member/member.service';
-import type { MemberPayload } from '@/types/common';
+import { Member } from '#@/member/entities/member.entity';
+import { MemberService } from '#@/member/member.service';
+import type { MemberPayload } from '#@/types/common';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 

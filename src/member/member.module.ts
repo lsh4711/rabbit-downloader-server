@@ -1,5 +1,5 @@
-import { AuthModule } from '@/auth/auth.module';
-import { Member } from '@/member/entities/member.entity';
+import { AuthModule } from '#@/auth/auth.module';
+import { Member } from '#@/member/entities/member.entity';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Module } from '@nestjs/common';
 import { MemberController } from './member.controller';

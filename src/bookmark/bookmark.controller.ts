@@ -1,7 +1,7 @@
-import { ResponseBookmarkDto } from '@/bookmark/dto/response-bookmark.dto';
-import { UpdateBookmarkDto } from '@/bookmark/dto/update-bookmark.dto';
-import { Permission } from '@/decorators/permission.decorator';
-import { UriCreator } from '@/utils/uri-creator.util';
+import { ResponseBookmarkDto } from '#@/bookmark/dto/response-bookmark.dto';
+import { UpdateBookmarkDto } from '#@/bookmark/dto/update-bookmark.dto';
+import { Permission } from '#@/decorators/permission.decorator';
+import { UriCreator } from '#@/utils/uri-creator.util';
 import {
   Body,
   Controller,

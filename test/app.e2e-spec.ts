@@ -1,9 +1,9 @@
-import { AppModule } from '@/app.module';
-import { AuthService } from '@/auth/auth.service';
-import { Member, MemberRole } from '@/member/entities/member.entity';
-import { MemberService } from '@/member/member.service';
-import type { MemberPayload } from '@/types/common';
-import { TestUtil } from '@/utils/test.util';
+import { AppModule } from '#@/app.module';
+import { AuthService } from '#@/auth/auth.service';
+import { Member, MemberRole } from '#@/member/entities/member.entity';
+import { MemberService } from '#@/member/member.service';
+import type { MemberPayload } from '#@/types/common';
+import { TestUtil } from '#@/utils/test.util';
 import { MikroORM } from '@mikro-orm/mysql';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';

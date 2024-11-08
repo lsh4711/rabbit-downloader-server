@@ -1,6 +1,6 @@
-import { AuthService } from '@/auth/auth.service';
-import { Member } from '@/member/entities/member.entity';
-import { MemberService } from '@/member/member.service';
+import { AuthService } from '#@/auth/auth.service';
+import { Member } from '#@/member/entities/member.entity';
+import { MemberService } from '#@/member/member.service';
 import { EntityManager } from '@mikro-orm/core';
 import { RequestContext } from '@mikro-orm/mysql';
 import { INestApplication } from '@nestjs/common';

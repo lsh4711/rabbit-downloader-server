@@ -1,8 +1,8 @@
-import { Time } from '@/decorators/time.decorator';
-import { type Notice, NoticeType } from '@/notice/entities/notice.entity';
-import { NoticeStatusRepository } from '@/notice/notice-status.repository';
-import { NoticeRepository } from '@/notice/notice.repository';
-import { AuthContext } from '@/utils/auth-context.util';
+import { Time } from '#@/decorators/time.decorator';
+import { type Notice, NoticeType } from '#@/notice/entities/notice.entity';
+import { NoticeStatusRepository } from '#@/notice/notice-status.repository';
+import { NoticeRepository } from '#@/notice/notice.repository';
+import { AuthContext } from '#@/utils/auth-context.util';
 import {
   CreateRequestContext,
   EntityManager,

@@ -1,9 +1,9 @@
-import { AuthService } from '@/auth/auth.service';
-import { GoogleTokenAuthGuard } from '@/auth/strategy/google-token.strategy';
-import { Public } from '@/decorators/public.decorator';
-import { User } from '@/decorators/user.decorator';
-import { ResponseMemberDto } from '@/member/dto/response-member.dto';
-import type { MemberPayload } from '@/types/common';
+import { AuthService } from '#@/auth/auth.service';
+import { GoogleTokenAuthGuard } from '#@/auth/strategy/google-token.strategy';
+import { Public } from '#@/decorators/public.decorator';
+import { User } from '#@/decorators/user.decorator';
+import { ResponseMemberDto } from '#@/member/dto/response-member.dto';
+import type { MemberPayload } from '#@/types/common';
 import { Controller, Post, Res, UseGuards } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import type { Response } from 'express';

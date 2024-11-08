@@ -1,5 +1,5 @@
-import { DecodeDownloadDto } from '@/download/dto/decode-download.dto';
-import { ParseDownloadDto } from '@/download/dto/parse-download.dto';
+import { DecodeDownloadDto } from '#@/download/dto/decode-download.dto';
+import { ParseDownloadDto } from '#@/download/dto/parse-download.dto';
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { DownloadService } from './download.service';
 

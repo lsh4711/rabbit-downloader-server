@@ -1,10 +1,10 @@
-import { Member } from '@/member/entities/member.entity';
+import { Member } from '#@/member/entities/member.entity';
 import {
   Notice,
   NoticeSender,
   NoticeType,
-} from '@/notice/entities/notice.entity';
-import { AuthContext } from '@/utils/auth-context.util';
+} from '#@/notice/entities/notice.entity';
+import { AuthContext } from '#@/utils/auth-context.util';
 import { rel } from '@mikro-orm/core';
 import { plainToInstance } from 'class-transformer';
 import { IsNotEmpty, IsNumberString, IsString } from 'class-validator';

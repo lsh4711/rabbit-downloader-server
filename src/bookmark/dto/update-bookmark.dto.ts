@@ -1,4 +1,4 @@
-import { BookmarkProgress } from '@/bookmark/entities/bookmark.entity';
+import { BookmarkProgress } from '#@/bookmark/entities/bookmark.entity';
 import { Type } from 'class-transformer';
 import { IsNumber, IsOptional, ValidateNested } from 'class-validator';
 

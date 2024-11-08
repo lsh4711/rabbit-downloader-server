@@ -1,6 +1,6 @@
-import { BookmarkRepository } from '@/bookmark/bookmark.repository';
-import { CommonBaseEntity } from '@/common/common-base.entity';
-import { Member } from '@/member/entities/member.entity';
+import { BookmarkRepository } from '#@/bookmark/bookmark.repository';
+import { CommonBaseEntity } from '#@/common/common-base.entity';
+import { Member } from '#@/member/entities/member.entity';
 import {
   Embeddable,
   Embedded,

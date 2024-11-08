@@ -1,5 +1,5 @@
-import { MemberRole } from '@/member/entities/member.entity';
-import type { MemberPayload } from '@/types/common';
+import { MemberRole } from '#@/member/entities/member.entity';
+import type { MemberPayload } from '#@/types/common';
 import { Reflector } from '@nestjs/core';
 
 type Permission = 'ADMIN' | 'MEMBER';

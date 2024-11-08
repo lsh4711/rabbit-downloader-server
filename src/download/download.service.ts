@@ -1,4 +1,4 @@
-import { PlaywrightService } from '@/playwright/playwright.service';
+import { PlaywrightService } from '#@/playwright/playwright.service';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

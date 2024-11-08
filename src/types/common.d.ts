@@ -1,4 +1,4 @@
-import type { Member } from '@/member/entities/member.entity';
+import type { Member } from '#@/member/entities/member.entity';
 
 declare module 'express' {
   interface Request {

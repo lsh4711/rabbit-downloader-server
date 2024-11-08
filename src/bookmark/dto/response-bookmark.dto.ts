@@ -1,7 +1,7 @@
 import {
   BookmarkProgress,
   BookmarkType,
-} from '@/bookmark/entities/bookmark.entity';
+} from '#@/bookmark/entities/bookmark.entity';
 import { Exclude, Expose, Transform, Type } from 'class-transformer';
 
 @Exclude()
