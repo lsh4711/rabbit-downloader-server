@@ -1,10 +1,31 @@
 services:
+  test-db:
+    image: mysql:8.0.36
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1
+      start_period: 3s
+      interval: 1s
+      timeout: 1s
+      retries: 10
+
+  test:
+    build:
+      context: .
+      target: test-builder
+    depends_on:
+      test-db:
+        condition: service_healthy
+    init: true
+    ipc: host
+    entrypoint: [ npx, jest ]
+
   server:
     build: .
-    container_name: rabbit-server-nest
     image: localhost:5000/rabbit-server-nest:1.12
+    container_name: rabbit-server-nest
     ipc: host
-    entrypoint: [ node,  dist/src/main ]
+    ports: [ "8080:8080" ]
     volumes: [ ./env/production/.env:/app/env/production/.env ]
-
-    network_mode: host
+    entrypoint: [ node, dist/src/main ]

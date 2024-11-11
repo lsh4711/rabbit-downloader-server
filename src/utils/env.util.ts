@@ -29,7 +29,7 @@ export class EnvUtil {
     return `${prefix}${this.getCurrentEnvDir()}/${this.mikroOrmConfigFileName}`;
   }
 
-  static async importMikroOrmConfig(prefix?: string): Promise<Options> {
+  static importMikroOrmConfig(prefix?: string): Options {
     // use require to run test without node flag
     // and load both extension .js and .ts without any settings.
     // eslint-disable-next-line @typescript-eslint/no-require-imports

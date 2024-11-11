@@ -15,8 +15,6 @@ import { NoticeModule } from './notice/notice.module';
   imports: [
     ConfigModule.forRoot({ envFilePath: EnvUtil.getDotEnvPath() }),
     MikroOrmModule.forRootAsync({ useFactory: EnvUtil.importMikroOrmConfig }),
-    // ConfigModule.forRoot(),
-    // MikroOrmModule.forRoot(),
     ScheduleModule.forRoot(),
     MemberModule,
     NoticeModule,

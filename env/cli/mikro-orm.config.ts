@@ -1,10 +1,7 @@
 import { defineConfig } from '@mikro-orm/mysql';
-import env from './env';
 
 export default defineConfig({
-  clientUrl: env.clientUrl,
   entities: ['src/*/entities/*.entity.ts'],
-
   entityGenerator: {
     path: 'src',
     fileName: (className) => {

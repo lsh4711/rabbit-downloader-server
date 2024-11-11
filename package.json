@@ -18,18 +18,20 @@
     "start": "NODE_ENV=dev nest start",
     "start:dev": "NODE_ENV=dev nest start --watch",
     "start:debug": "NODE_ENV=dev nest start --debug --watch",
-    "start:prod": "NODE_ENV=dev node dist/src/main",
+    "start:prod": "NODE_ENV=production node dist/src/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "livereload": "npx livereload src -e ts"
+    "livereload": "npx livereload src -e ts",
+    "deploy:dev": "NODE_ENV=dev pm2 start dist/src/main.js",
+    "deploy:prod": "NODE_ENV=production pm2 start dist/src/main.js"
   },
   "dependencies": {
-    "@mikro-orm/core": "6.3.14-dev.74",
-    "@mikro-orm/mysql": "6.3.14-dev.74",
+    "@mikro-orm/core": "^6.4.0",
+    "@mikro-orm/mysql": "^6.4.0",
     "@mikro-orm/nestjs": "^6.0.2",
     "@mikro-orm/sql-highlighter": "^1.0.1",
     "@nestjs/common": "^10.0.0",
@@ -40,7 +42,7 @@
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/schedule": "^4.1.1",
-    "@nestjs/swagger": "^8.0.2",
+    "@nestjs/swagger": "^8.0.4",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "cookie-parser": "^1.4.7",
@@ -51,13 +53,11 @@
     "rxjs": "^7.8.1"
   },
   "devDependencies": {
-    "@mikro-orm/cli": "6.3.14-dev.74",
-    "@mikro-orm/entity-generator": "6.3.14-dev.74",
+    "@mikro-orm/cli": "^6.4.0",
+    "@mikro-orm/entity-generator": "^6.4.0",
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",
-    "@swc/cli": "^0.5.0",
-    "@swc/core": "^1.9.1",
     "@types/cookie-parser": "^1.4.7",
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.2",
@@ -77,8 +77,7 @@
     "ts-loader": "^9.4.3",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.1.3",
-    "win-node-env": "^0.6.1"
+    "typescript": "^5.1.3"
   },
   "peerDependencies": {
     "ansi-colors": "*",
@@ -110,5 +109,8 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "optionalDependencies": {
+    "win-node-env": "^0.6.1"
   }
 }

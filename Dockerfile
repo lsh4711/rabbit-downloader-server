@@ -28,37 +28,42 @@ COPY --from=node-builder /node /usr
 RUN npx playwright@${PLAYWRIGHT_VERSION} install chromium --with-deps \
     && rm -rf ~/.npm /var/lib/apt/lists/*
 
-FROM ubuntu:noble AS app-builder
+FROM playwright-builder AS app-base
 
-ARG NODE_ENV
 WORKDIR /app
 
-COPY --from=node-builder /node /usr
 COPY package.json package-lock.json ./
-
-RUN npm clean-install --force --include=dev # use `--force` until mikro-orm@6.3.14 release, because mikro-orm@next cause peer dependency conflict
-
-#COPY nest-cli.json .
+RUN npm clean-install
 COPY tsconfig.json tsconfig.build.json ./
-COPY env/${NODE_ENV}/mikro-orm.config.ts env/${NODE_ENV}/
 COPY src src
 
+FROM app-base AS test-builder
+
+COPY env/test/mikro-orm.config.ts env/test/
+COPY env/test/.env.ci env/test/.env
+COPY test test
+
+FROM app-base AS app-builder
+
+ARG NODE_ENV
+
+COPY nest-cli.json .
+COPY env/${NODE_ENV}/mikro-orm.config.ts env/${NODE_ENV}/
+
 RUN npx nest build \
-    && npm prune --force --production \
+    && npm prune --production \
     && rm \
     dist/tsconfig.build.tsbuildinfo \
     tsconfig.json \
     tsconfig.build.json \
+    nest-cli.json \
     package-lock.json
 
-FROM playwright-builder as rabbit-server-nest
+#Reduced from 2.5+ GB to 1.20 GB
+FROM playwright-builder as app
 
 ARG NODE_ENV
 ENV NODE_ENV=${NODE_ENV}
 WORKDIR /app
 
-COPY --from=node-builder /node /usr
 COPY --from=app-builder /app .
-
-#for preview
-#COPY env/${NODE_ENV}/.env env/${NODE_ENV}/

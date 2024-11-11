@@ -34,6 +34,7 @@ export class PlaywrightService {
     });
     this.page = await this.context.newPage();
 
+    /* istanbul ignore next */
     return this.page.evaluate(() => {
       const root = document.createElement('div');
       root.id = 'root';
@@ -42,6 +43,7 @@ export class PlaywrightService {
   }
 
   async parseHtmlText(html: string) {
+    /* istanbul ignore next */
     return await this.page!.evaluate((html) => {
       const requestContext = document.createElement('div');
       requestContext.innerHTML = html;

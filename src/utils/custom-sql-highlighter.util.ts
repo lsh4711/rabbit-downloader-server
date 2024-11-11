@@ -6,6 +6,7 @@ const ansi = (text: string, color: string) => `${color}${text}\x1b[0m`;
 const ansiOrange = (text: string) => ansi(text, '\x1b[38;5;214m');
 
 export const customSqlHighlighter = new SqlHighlighter({
+  // '@mikro-orm/sql-highlighter' has type issue.
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
   [HighlightSubject.QUOTE]: ansiOrange,
