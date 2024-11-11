@@ -1,0 +1,10 @@
+services:
+  server:
+    build: .
+    container_name: rabbit-server-nest
+    image: localhost:5000/rabbit-server-nest:1.12
+    ipc: host
+    entrypoint: [ node,  dist/src/main ]
+    volumes: [ ./env/production/.env:/app/env/production/.env ]
+
+    network_mode: host
