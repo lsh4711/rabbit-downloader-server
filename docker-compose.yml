@@ -2,6 +2,7 @@ services:
   test-db:
     build:
       target: test-db
+    image: test/test-db
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: true
     healthcheck:
