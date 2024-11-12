@@ -33,9 +33,8 @@ jobs:
 
       - name: Start Docker with new root
         run: |
-          sudo systemctl start docker
+          sudo systemctl start docker || systemctl status docker.service
           sleep 5
-          systemctl status docker.service
 
       - run: |
           echo 1
