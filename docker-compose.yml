@@ -11,15 +11,15 @@ services:
       timeout: 1s
       retries: 10
 
-  test:
-    build:
-      target: test-builder
-    depends_on:
-      test-db:
-        condition: service_healthy
-    init: true
-    ipc: host
-    entrypoint: [ npx, jest, --bail ]
+#  test:
+#    build:
+#      target: test-builder
+#    depends_on:
+#      test-db:
+#        condition: service_healthy
+#    init: true
+#    ipc: host
+#    entrypoint: [ npx, jest, --bail ]
 
 #  server:
 #    build: .
