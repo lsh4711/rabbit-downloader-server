@@ -49,6 +49,7 @@ jobs:
           echo 2
           docker images
           echo 3
+          sudo chown -R $USER:$USER ./.docker-cache
 
 #          docker image
 
