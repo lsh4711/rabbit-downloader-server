@@ -6,6 +6,8 @@ ARG NODE_ENV=production
 ARG NODE_VERSION=20.18.0
 ARG PLAYWRIGHT_VERSION=1.48.2
 
+FROM mysql:8.0.36 AS test-db
+
 FROM ubuntu:noble AS node-builder
 
 ARG NODE_VERSION
@@ -58,8 +60,6 @@ RUN npx nest build \
     tsconfig.build.json \
     nest-cli.json \
     package-lock.json
-
-FROM mysql:8.0.36 AS test-db
 
 #Reduced from 2.5+ GB to 1.20 GB
 FROM playwright-builder AS app
