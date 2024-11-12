@@ -35,6 +35,7 @@ jobs:
         run: |
           sudo systemctl start docker
           sleep 5
+          systemctl status docker.service
 
       - run: |
           echo 1
