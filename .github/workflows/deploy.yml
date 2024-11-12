@@ -13,8 +13,6 @@ jobs:
       - run: |
           sudo systemctl stop docker
           sudo systemctl stop docker.socket
-          sudo rm -rf /var/lib/docker
-          sudo mkdir /var/lib/docker -p
           sudo chown -R $USER:$USER /var/lib/docker
           sudo chmod -R 755 /var/lib/docker
 
@@ -25,6 +23,9 @@ jobs:
           restore-keys: ${{ runner.os }}-docker-cache-
           path: /var/lib/docker
       - run: |
+          sudo chown -R $USER:$USER /var/lib/docker
+          sudo chmod -R 755 /var/lib/docker
+          
           sudo systemctl start docker
           sudo systemctl start docker.socket
           sleep 5
@@ -35,9 +36,6 @@ jobs:
           echo 2
           docker images
           echo 3
-          sudo chown -R $USER:$USER /var/lib/docker
-          sudo chmod -R 755 /var/lib/docker
-          
 
 #          docker image
 
