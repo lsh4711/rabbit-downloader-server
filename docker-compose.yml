@@ -1,6 +1,7 @@
 services:
   test-db:
-    image: mysql:8.0.36
+    build:
+      target: test-db
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: true
     healthcheck:
@@ -12,7 +13,6 @@ services:
 
   test:
     build:
-      context: .
       target: test-builder
     depends_on:
       test-db:

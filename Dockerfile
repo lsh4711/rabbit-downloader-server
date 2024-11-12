@@ -59,6 +59,8 @@ RUN npx nest build \
     nest-cli.json \
     package-lock.json
 
+FROM mysql:8.0.36 as test-db
+
 #Reduced from 2.5+ GB to 1.20 GB
 FROM playwright-builder AS app
 
