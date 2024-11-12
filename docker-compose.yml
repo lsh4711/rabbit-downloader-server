@@ -21,11 +21,11 @@ services:
     ipc: host
     entrypoint: [ npx, jest, --bail ]
 
-  server:
-    build: .
-    image: localhost:5000/rabbit-server-nest:1.12
-    container_name: rabbit-server-nest
-    ipc: host
-    ports: [ "8080:8080" ]
-    volumes: [ ./env/production/.env:/app/env/production/.env ]
-    entrypoint: [ node, dist/src/main ]
+#  server:
+#    build: .
+#    image: localhost:5000/rabbit-server-nest:1.12
+#    container_name: rabbit-server-nest
+#    ipc: host
+#    ports: [ "8080:8080" ]
+#    volumes: [ ./env/production/.env:/app/env/production/.env ]
+#    entrypoint: [ node, dist/src/main ]
