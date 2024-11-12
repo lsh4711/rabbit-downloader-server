@@ -6,66 +6,64 @@ ARG NODE_ENV=production
 ARG NODE_VERSION=20.18.0
 ARG PLAYWRIGHT_VERSION=1.48.2
 
-FROM mysql:8.0.36 AS test-db
+FROM ubuntu:noble AS node-builder
 
-#FROM ubuntu:noble AS node-builder
-#
-#ARG NODE_VERSION
-#WORKDIR /node
-#
-#RUN apt-get update && apt install --yes --no-install-recommends \
-#    curl  \
-#    ca-certificates  \
-#    xz-utils \
-#    && rm -rf /var/lib/apt/lists/* \
-#    && curl https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.xz -o node.tar.xz \
-#    && tar -xf node.tar.xz --strip 1 \
-#    && rm CHANGELOG.md LICENSE README.md node.tar.xz
-#
-#FROM ubuntu:noble AS playwright-builder
-#
-#ARG PLAYWRIGHT_VERSION
-#
-#COPY --from=node-builder /node /usr
-#RUN npx playwright@${PLAYWRIGHT_VERSION} install chromium --with-deps \
-#    && rm -rf ~/.npm /var/lib/apt/lists/*
-#
-#FROM playwright-builder AS app-base
-#
-#WORKDIR /app
-#
-#COPY package.json package-lock.json ./
-#RUN npm clean-install
-#COPY tsconfig.json tsconfig.build.json ./
-#COPY src src
-#
-#FROM app-base AS test-builder
-#
-#COPY env/test/mikro-orm.config.ts env/test/
-#COPY env/test/.env.ci env/test/.env
-#COPY test test
-#
-#FROM app-base AS app-builder
-#
-#ARG NODE_ENV
-#
-#COPY nest-cli.json .
-#COPY env/${NODE_ENV}/mikro-orm.config.ts env/${NODE_ENV}/
-#
-#RUN npx nest build \
-#    && npm prune --production \
-#    && rm \
-#    dist/tsconfig.build.tsbuildinfo \
-#    tsconfig.json \
-#    tsconfig.build.json \
-#    nest-cli.json \
-#    package-lock.json
-#
-##Reduced from 2.5+ GB to 1.20 GB
-#FROM playwright-builder AS app
-#
-#ARG NODE_ENV
-#ENV NODE_ENV=${NODE_ENV}
-#WORKDIR /app
-#
-#COPY --from=app-builder /app .
+ARG NODE_VERSION
+WORKDIR /node
+
+RUN apt-get update && apt install --yes --no-install-recommends \
+    curl  \
+    ca-certificates  \
+    xz-utils \
+    && rm -rf /var/lib/apt/lists/* \
+    && curl https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.xz -o node.tar.xz \
+    && tar -xf node.tar.xz --strip 1 \
+    && rm CHANGELOG.md LICENSE README.md node.tar.xz
+
+FROM ubuntu:noble AS playwright-builder
+
+ARG PLAYWRIGHT_VERSION
+
+COPY --from=node-builder /node /usr
+RUN npx playwright@${PLAYWRIGHT_VERSION} install chromium --with-deps \
+    && rm -rf ~/.npm /var/lib/apt/lists/*
+
+FROM playwright-builder AS app-base
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm clean-install
+COPY tsconfig.json tsconfig.build.json ./
+COPY src src
+
+FROM app-base AS test-builder
+
+COPY env/test/mikro-orm.config.ts env/test/
+COPY env/test/.env.ci env/test/.env
+COPY test test
+
+FROM app-base AS app-builder
+
+ARG NODE_ENV
+
+COPY nest-cli.json .
+COPY env/${NODE_ENV}/mikro-orm.config.ts env/${NODE_ENV}/
+
+RUN npx nest build \
+    && npm prune --production \
+    && rm \
+    dist/tsconfig.build.tsbuildinfo \
+    tsconfig.json \
+    tsconfig.build.json \
+    nest-cli.json \
+    package-lock.json
+
+#Reduced from 2.5+ GB to 1.20 GB
+FROM playwright-builder AS app
+
+ARG NODE_ENV
+ENV NODE_ENV=${NODE_ENV}
+WORKDIR /app
+
+COPY --from=app-builder /app .

@@ -9,26 +9,22 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-24.04
-    permissions: write-all
     steps:
       - uses: actions/checkout@v4
-
-#      - uses: actions/cache@v4
-#        with:
-#          key: ${{ runner.os }}-buildx-cache
-#          path: /tmp/.buildx-cache
-
+      - uses: actions/cache@v4
+        with:
+          key: ${{ runner.os }}-docker-cache
+          path: /tmp/.docker-cache
       - uses: docker/setup-buildx-action@v3
       - uses: docker/bake-action@v5
         with:
           load: true
           set: |
-            *.output=type=local,dest=./tmp/docker-cache            
-            *.cache-from=type=gha
-            *.cache-to=type=gha,mode=max
-      - run: cd ./tmp/docker-cache && ls && du -sh
-#      - run: docker compose up -d --wait test-db
+            *.cache-from=type=local,src=/tmp/.docker-cache
+            *.cache-to=type=local,dest=/tmp/.docker-cache-new,mode=max
 
-#      - run: |
-#          rm -rf /tmp/.buildx-cache
-#          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+      - run: docker compose up test
+
+      - run: |
+          rm -rf /tmp/.docker-cache
+          mv /tmp/.docker-cache-new /tmp/.docker-cache

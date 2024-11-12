@@ -1,7 +1,6 @@
 services:
   test-db:
-    build:
-      target: test-db
+    image: mysql:8.0.36
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: true
     healthcheck:
@@ -11,21 +10,21 @@ services:
       timeout: 1s
       retries: 10
 
-#  test:
-#    build:
-#      target: test-builder
-#    depends_on:
-#      test-db:
-#        condition: service_healthy
-#    init: true
-#    ipc: host
-#    entrypoint: [ npx, jest, --bail ]
+  test:
+    build:
+      target: test-builder
+    depends_on:
+      test-db:
+        condition: service_healthy
+    init: true
+    ipc: host
+    entrypoint: [ npx, jest, --bail ]
 
-#  server:
-#    build: .
-#    image: localhost:5000/rabbit-server-nest:1.12
-#    container_name: rabbit-server-nest
-#    ipc: host
-#    ports: [ "8080:8080" ]
-#    volumes: [ ./env/production/.env:/app/env/production/.env ]
-#    entrypoint: [ node, dist/src/main ]
+  server:
+    build: .
+    image: localhost:5000/rabbit-server-nest:1.12
+    container_name: rabbit-server-nest
+    ipc: host
+    ports: [ "8080:8080" ]
+    volumes: [ ./env/production/.env:/app/env/production/.env ]
+    entrypoint: [ node, dist/src/main ]
