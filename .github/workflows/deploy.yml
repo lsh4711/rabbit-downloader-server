@@ -17,7 +17,6 @@ jobs:
           restore-keys: ${{ runner.os }}-docker-cache-
           path: ./.docker-cache
 
-
       - name: Stop Docker processes
         run: |
           sudo kill $(pidof dockerd) || true
@@ -29,7 +28,7 @@ jobs:
           sudo mkdir -p /etc/docker
           sudo tee /etc/docker/daemon.json > /dev/null <<EOF
           {
-            "data-root": "${{ github.workspace }}/test/docker"
+            "data-root": "${{ github.workspace }}/.docker-cache"
           }
           EOF
 
