@@ -22,10 +22,10 @@ jobs:
         with:
           load: true
           set: |
-            *.output=type=local
+            *.output=type=local,dest=./tmp/docker-cache            
             *.cache-from=type=gha
             *.cache-to=type=gha,mode=max
-      - run: cd /tmp/.docker-cache && ls && du -sh
+      - run: cd ./tmp/docker-cache && ls && du -sh
 #      - run: docker compose up -d --wait test-db
 
 #      - run: |
