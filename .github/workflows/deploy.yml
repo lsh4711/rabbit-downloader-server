@@ -13,8 +13,7 @@ jobs:
       - uses: actions/checkout@v4
       - run: |
           mkdir ./.docker-cache
-          sudo chown -R root:root ./.docker-cache
-          sudo chmod -R 711 ./.docker-cache
+          sudo chown -R $USER:$USER ./.docker-cache
 
       - uses: actions/cache@v4
         with:
