@@ -15,6 +15,7 @@ jobs:
           sudo systemctl stop docker.socket
           sudo rm -rf /var/lib/docker
           sudo mkdir /var/lib/docker -p
+          sudo chown -R $USER:$USER /var/lib/docker
           sudo chmod -R 755 /var/lib/docker
 
       - uses: actions/checkout@v4
@@ -34,6 +35,7 @@ jobs:
           echo 2
           docker images
           echo 3
+          sudo chown -R $USER:$USER /var/lib/docker
           sudo chmod -R 755 /var/lib/docker
           
 
