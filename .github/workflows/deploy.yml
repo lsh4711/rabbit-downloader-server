@@ -10,23 +10,44 @@ jobs:
   deploy:
     runs-on: ubuntu-24.04
     steps:
+      - run: |
+          sudo systemctl stop docker
+          sudo systemctl stop docker.socket
+
       - uses: actions/checkout@v4
       - uses: actions/cache@v4
         with:
-          key: ${{ runner.os }}-docker-cache
-          path: /tmp/.docker-cache
-      - uses: docker/setup-buildx-action@v3
-#      - uses: docker/bake-action@v5
-#        with:
-##          load: true
-#          set: |
-#            *.cache-from=type=local,src=/tmp/.docker-cache
-#            *.cache-to=type=local,dest=/tmp/.docker-cache-new,mode=max
-
-      #      - run: docker compose up test
-      - run: docker compose build test
+          key: ${{ runner.os }}-docker-cache-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-docker-cache-
+          path: /var/lib/docker
 
       - run: |
-          rm -rf /tmp/.docker-cache
-          mv /tmp/.docker-cache-new /tmp/.docker-cache
+          sudo systemctl start docker
+          sudo systemctl start docker.socket
+          # 데몬이 완전히 시작될 때까지 대기
+          sleep 5
+          docker info
+
+      - run: |
+          docker images
           
+
+#          docker image
+
+      #      - uses: docker/setup-buildx-action@v3
+
+
+      #      - uses: docker/bake-action@v5
+      #        with:
+      ##          load: true
+      #          set: |
+      #            *.cache-from=type=local,src=/tmp/.docker-cache
+      #            *.cache-to=type=local,dest=/tmp/.docker-cache-new,mode=max
+
+      #      - run: docker compose up test
+
+#      - run: docker compose build test
+#      - run: |
+#          rm -rf /tmp/.docker-cache
+#          mv /tmp/.docker-cache-new /tmp/.docker-cache
+
