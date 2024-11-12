@@ -60,7 +60,7 @@ RUN npx nest build \
     package-lock.json
 
 #Reduced from 2.5+ GB to 1.20 GB
-FROM playwright-builder as app
+FROM playwright-builder AS app
 
 ARG NODE_ENV
 ENV NODE_ENV=${NODE_ENV}
