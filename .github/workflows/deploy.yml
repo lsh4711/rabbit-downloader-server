@@ -10,24 +10,30 @@ jobs:
   deploy:
     runs-on: ubuntu-24.04
     steps:
-      - run: |
-          sudo systemctl stop docker
-          sudo systemctl stop docker.socket
-          sudo chown -R $USER:$USER /var/lib/docker
-          sudo chmod -R 755 /var/lib/docker
-
       - uses: actions/checkout@v4
       - uses: actions/cache@v4
         with:
           key: ${{ runner.os }}-docker-cache-${{ github.sha }}
           restore-keys: ${{ runner.os }}-docker-cache-
-          path: /var/lib/docker
-      - run: |
-          sudo chown -R $USER:$USER /var/lib/docker
-          sudo chmod -R 755 /var/lib/docker
-          
+          path: ./.docker-cache
+
+
+      - name: Stop Docker daemon
+        run: |
+          sudo systemctl stop docker
+          sudo systemctl stop docker.socket
+
+      - name: Configure Docker daemon
+        run: |
+          sudo tee /etc/docker/daemon.json > /dev/null <<EOF
+          {
+            "data-root": "${{ github.workspace }}/.docker-cache
+          }
+          EOF
+
+      - name: Start Docker with new root
+        run: |
           sudo systemctl start docker
-          sudo systemctl start docker.socket
           sleep 5
 
       - run: |
