@@ -23,7 +23,8 @@ jobs:
 #            *.cache-from=type=local,src=/tmp/.docker-cache
 #            *.cache-to=type=local,dest=/tmp/.docker-cache-new,mode=max
 
-#      - run: docker compose up test
+      #      - run: docker compose up test
+      - run: docker compose build test
 
       - run: |
           rm -rf /tmp/.docker-cache
