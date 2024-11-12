@@ -18,22 +18,26 @@ jobs:
           path: ./.docker-cache
 
 
-      - name: Stop Docker daemon
+      - name: Stop Docker processes
         run: |
-          sudo systemctl stop docker
-          sudo systemctl stop docker.socket
+          sudo kill $(pidof dockerd) || true
+          sudo kill $(pidof containerd) || true
+          sleep 2
 
       - name: Configure Docker daemon
         run: |
+          sudo mkdir -p /etc/docker
           sudo tee /etc/docker/daemon.json > /dev/null <<EOF
           {
-            "data-root": "${{ github.workspace }}/.docker-cache
+            "data-root": "${{ github.workspace }}/test/docker"
           }
           EOF
 
-      - name: Start Docker with new root
+      - name: Start Docker daemon
         run: |
-          sudo systemctl start docker || systemctl status docker.service
+          sudo containerd &
+          sleep 2
+          sudo dockerd --debug &
           sleep 5
 
       - run: |
