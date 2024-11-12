@@ -32,6 +32,9 @@ jobs:
           echo 2
           docker images
           echo 3
+          
+          sudo chmod -R 755 /var/lib/docker
+          
 
 #          docker image
 
