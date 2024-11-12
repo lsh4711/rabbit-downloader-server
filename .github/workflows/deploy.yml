@@ -14,11 +14,12 @@ jobs:
       - uses: docker/setup-buildx-action@v3
       - uses: docker/bake-action@v5
         with:
-          push: false
+          pull: true
           load: true
+
           set: |
-            *.cache-to=type=gha,mode=max
             *.cache-from=type=gha
+            *.cache-to=type=gha,mode=max
       - run: docker compose up test
 
 
