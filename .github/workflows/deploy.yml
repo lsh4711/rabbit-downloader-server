@@ -13,7 +13,6 @@ jobs:
       - run: |
           sudo systemctl stop docker
           sudo systemctl stop docker.socket
-          sudo chmod -R 755 /var/lib/docker
 
       - uses: actions/checkout@v4
       - uses: actions/cache@v4
