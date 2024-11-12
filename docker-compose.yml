@@ -13,6 +13,13 @@ services:
   test:
     build:
       target: test-builder
+      cache_from:
+        - type=local
+        - src=/tmp/.docker-cache
+      cache_to:
+        - dest=/tmp/.docker-cache-new
+        - mode=max
+
     depends_on:
       test-db:
         condition: service_healthy
