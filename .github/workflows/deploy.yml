@@ -26,11 +26,12 @@ jobs:
           sudo systemctl start docker.socket
           # 데몬이 완전히 시작될 때까지 대기
           sleep 5
-          docker info
-
       - run: |
+          echo 1
+          docker info
+          echo 2
           docker images
-          
+          echo 3
 
 #          docker image
 
