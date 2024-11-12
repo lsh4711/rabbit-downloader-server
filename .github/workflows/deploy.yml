@@ -13,6 +13,7 @@ jobs:
       - run: |
           sudo systemctl stop docker
           sudo systemctl stop docker.socket
+          sudo chmod -R 755 /var/lib/docker
 
       - uses: actions/checkout@v4
       - uses: actions/cache@v4
@@ -22,10 +23,11 @@ jobs:
           path: /var/lib/docker
 
       - run: |
+#          sudo chmod -R 755 /var/lib/docker
           sudo systemctl start docker
           sudo systemctl start docker.socket
-          # 데몬이 완전히 시작될 때까지 대기
           sleep 5
+
       - run: |
           echo 1
           docker info
