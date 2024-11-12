@@ -11,6 +11,11 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
+      - run: |
+          mkdir ./.docker-cache
+          sudo chown -R root:root ./.docker-cache
+          sudo chmod -R 711 ./.docker-cache
+
       - uses: actions/cache@v4
         with:
           key: ${{ runner.os }}-docker-cache-${{ github.sha }}
