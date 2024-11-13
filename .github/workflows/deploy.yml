@@ -24,8 +24,9 @@ jobs:
           restore-keys: ${{ runner.os }}-docker-cache-
           path: ./docker.tar
 
-#      - run: sudo tar -xf ./docker.tar
-#      - run: sudo ls var/lib/docker
+      - run: sudo tar -xf ./docker.tar
+      - run: sudo ls var/lib/docker
+      - run: ls sklajflksf
 
       - name: Start Docker daemon
         run: |
