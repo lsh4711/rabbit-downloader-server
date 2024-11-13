@@ -12,14 +12,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          mkdir ./.docker-cache
+          mkdir ./.docker-cache/{image,overlay2}
           sudo chown -R $USER:$USER ./.docker-cache
 
       - uses: actions/cache@v4
         with:
           key: ${{ runner.os }}-docker-cache-${{ github.sha }}
           restore-keys: ${{ runner.os }}-docker-cache-
-          path: ./.docker-cache
+          path: |
+            ./.docker-cache/image
+            ./.docker-cache/overlay2
 
       - name: Stop Docker processes
         run: |
@@ -32,7 +34,8 @@ jobs:
           sudo mkdir -p /etc/docker
           sudo tee /etc/docker/daemon.json > /dev/null <<EOF
           {
-            "data-root": "${{ github.workspace }}/.docker-cache"
+            "data-root": "${{ github.workspace }}/test/docker",
+            "storage-driver": "overlay2"
           }
           EOF
 
