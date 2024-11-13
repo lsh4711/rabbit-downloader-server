@@ -26,8 +26,11 @@ jobs:
       - run: sudo chown -R runner:docker /var/lib/docker
       - run: chmod -R 777 /var/lib/docker
 
-      - run: sudo chown -R runner:docker /usr/bin
-      - run: chmod -R 777 /usr/bin
+      - run: sudo chown -R runner:docker /usr/bin/tar
+      - run: chmod -R 777 /usr/bin/tar
+
+      - run: sudo chown -R runner:docker /usr/bin/git
+      - run: chmod -R 777 /usr/bin/git
 
       - uses: actions/cache@v4
         with:
@@ -60,5 +63,9 @@ jobs:
       - run: sudo chown -R runner:docker /var/lib/docker
       - run: chmod -R 777 /var/lib/docker
 
-      - run: sudo chown -R runner:docker /usr/bin
-      - run: chmod -R 777 /usr/bin
+      - run: sudo chown -R runner:docker /usr/bin/tar
+      - run: chmod -R 777 /usr/bin/tar
+
+      - run: sudo chown -R runner:docker /usr/bin/git
+      - run: chmod -R 777 /usr/bin/git
+
