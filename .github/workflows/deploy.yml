@@ -21,12 +21,8 @@ jobs:
       - run: id -un
       - run: id -gn
 
-      - run: sudo chmod -R 777 /var/lib/docker
       - run: sudo chown -R runner:docker /var/lib/docker
-
-      - run: rm -rf /var/lib/docker/{image,overlay2}
-      - run: mkdir -p /var/lib/docker/image
-      - run: mkdir -p /var/lib/docker/overlay2
+      - run: chmod -R 777 /var/lib/docker
 
       - uses: actions/cache@v4
         with:
@@ -54,8 +50,8 @@ jobs:
           sudo kill $(pidof containerd) || true
           sleep 2
 
-      - run: sudo chmod -R 777 /var/lib/docker
       - run: sudo chown -R runner:docker /var/lib/docker
+      - run: chmod -R 777 /var/lib/docker
 #          sudo chmod -R 777 /tmp/.docker-cache
 
 
