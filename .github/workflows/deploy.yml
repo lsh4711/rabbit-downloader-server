@@ -34,8 +34,8 @@ jobs:
 
       - run: docker images && docker ps -a
 
-      - name: Build production app
-        run: docker compose build app
+      - name: Build production server
+        run: docker compose build server
 
       - run: docker images && docker ps -a
 
