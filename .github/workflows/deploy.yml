@@ -12,6 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - run: |
+          mkdir -p ./docker-cache/${image,overlay2}
+          sudo chmod -R 777 ./.docker-cache
+
       - uses: actions/cache@v4
         with:
           key: ${{ runner.os }}-docker-cache-${{ github.sha }}
