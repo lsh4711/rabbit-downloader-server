@@ -18,19 +18,7 @@ jobs:
 
       - uses: actions/checkout@v4
 
-      - run: id -un
-      - run: id -gn
-
-      - run: sudo usermod -aG docker root
-
-      - run: sudo chown -R runner:docker /var/lib/docker
       - run: chmod -R 777 /var/lib/docker
-
-      - run: sudo chown -R runner:docker /usr/bin/tar
-      - run: chmod -R 777 /usr/bin/tar
-
-      - run: sudo chown -R runner:docker /usr/bin/git
-      - run: chmod -R 777 /usr/bin/git
 
       - uses: actions/cache@v4
         with:
@@ -58,15 +46,6 @@ jobs:
           sudo kill $(pidof containerd) || true
           sleep 2
 
-      - run: sudo usermod -aG docker root
-
-      - run: sudo chown -R runner:docker /var/lib/docker
       - run: chmod -R 777 /var/lib/docker
-
-      - run: sudo chown -R runner:docker /usr/bin/tar
-      - run: chmod -R 777 /usr/bin/tar
-
-      - run: sudo chown -R runner:docker /usr/bin/git
-      - run: chmod -R 777 /usr/bin/git
-
-
+      - run: tar -czf ./docker.tar.gz /var/lib/docker
+      - run: ls
