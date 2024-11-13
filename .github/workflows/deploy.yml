@@ -10,20 +10,15 @@ jobs:
   deploy:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-
-#      - run: |
-#          sudo mkdir -p ./.docker-cache/{image,overlay2}
-#          sudo chown -R $USER:$USER ./.docker-cache
-#          sudo chmod -R 777 ./.docker-cache
+#      - uses: actions/checkout@v4
 
       - uses: actions/cache@v4
         with:
           key: ${{ runner.os }}-docker-cache-${{ github.sha }}
           restore-keys: ${{ runner.os }}-docker-cache-
           path: |
-            ./.docker-cache/image
-            ./.docker-cache/overlay2
+            /tmp/.docker-cache/image
+            /tmp/.docker-cache/overlay2
 
       - name: Stop Docker processes
         run: |
@@ -36,7 +31,7 @@ jobs:
           sudo mkdir -p /etc/docker
           sudo tee /etc/docker/daemon.json > /dev/null <<EOF
           {
-            "data-root": "${{ github.workspace }}/.docker-cache",
+            "data-root": "/tmp/.docker-cache",
             "storage-driver": "overlay2"
           }
           EOF
@@ -50,6 +45,6 @@ jobs:
       - run: docker pull mysql:8.0.36
       - run: |
           docker images
-          sudo chmod -R 777 ./.docker-cache
+#          sudo chmod -R 777 ./.docker-cache
       #          sudo chown -R $USER:$USER ./.docker-cache
 
