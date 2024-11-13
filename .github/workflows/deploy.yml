@@ -41,7 +41,7 @@ jobs:
           sudo containerd &
           sleep 2
           sudo dockerd --debug &
-          sleep 5
+          sleep 2
 
       - run: docker pull mysql:8.0.36
 
