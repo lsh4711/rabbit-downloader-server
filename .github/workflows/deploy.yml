@@ -18,7 +18,8 @@ jobs:
           path: ./docker.tar
 
       - name: restore docker
-        if: steps.cache-docker.outputs.cache-hit == true
+
+        if: steps.cache.outputs.cache-hit == true
         run: |
           sudo systemctl stop docker
           sudo tar -xf ./docker.tar
