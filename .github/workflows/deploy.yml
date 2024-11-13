@@ -31,6 +31,8 @@ jobs:
           sudo rm -rf /var/lib/docker
           sudo mv var/lib/docker /var/lib/docker
 
+      - run: sudo ls /var/lib/docker
+
       - name: Start Docker daemon
         run: |
           sudo containerd &
