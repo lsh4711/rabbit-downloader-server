@@ -53,23 +53,3 @@ jobs:
           sudo chmod -R 777 ./.docker-cache
       #          sudo chown -R $USER:$USER ./.docker-cache
 
-
-#          docker image
-
-      #      - uses: docker/setup-buildx-action@v3
-
-
-      #      - uses: docker/bake-action@v5
-      #        with:
-      ##          load: true
-      #          set: |
-      #            *.cache-from=type=local,src=/tmp/.docker-cache
-      #            *.cache-to=type=local,dest=/tmp/.docker-cache-new,mode=max
-
-      #      - run: docker compose up test
-
-#      - run: docker compose build test
-#      - run: |
-#          rm -rf /tmp/.docker-cache
-#          mv /tmp/.docker-cache-new /tmp/.docker-cache
-
