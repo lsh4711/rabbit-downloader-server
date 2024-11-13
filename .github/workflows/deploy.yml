@@ -12,9 +12,7 @@ jobs:
     steps:
       - name: Stop Docker processes
         run: |
-          sudo kill $(pidof dockerd) || true
-          sudo kill $(pidof containerd) || true
-          sleep 2
+          sudo systemctl stop docker
 
       - uses: actions/checkout@v4
 
@@ -33,10 +31,7 @@ jobs:
 
       - name: Start Docker daemon
         run: |
-          sudo containerd &
-          sleep 2
-          sudo dockerd --debug &
-          sleep 2
+          sudo systemctl start docker
 
       - run: docker compose up -d test-db --wait
 
@@ -45,9 +40,7 @@ jobs:
 
       - name: Stop Docker processes
         run: |
-          sudo kill $(pidof dockerd) || true
-          sudo kill $(pidof containerd) || true
-          sleep 2
+          sudo systemctl stop docker
 
       - run: |
           sudo tar -cf ./docker.tar /var/lib/docker
