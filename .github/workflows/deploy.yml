@@ -12,11 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - run: |
-          sudo mkdir -p ./.docker-cache/{image,overlay2}
-          
-          sudo chown -R $USER:$USER ./.docker-cache
-          sudo chmod -R 777 ./.docker-cache
+#      - run: |
+#          sudo mkdir -p ./.docker-cache/{image,overlay2}
+#          sudo chown -R $USER:$USER ./.docker-cache
+#          sudo chmod -R 777 ./.docker-cache
 
       - uses: actions/cache@v4
         with:
@@ -53,8 +52,8 @@ jobs:
 
       - run: |
           docker images
-          sudo chown -R $USER:$USER ./.docker-cache
-          sudo chmod -R 777 ./.docker-cache
+#          sudo chown -R $USER:$USER ./.docker-cache
+#          sudo chmod -R 777 ./.docker-cache
 
 
 #          docker image
