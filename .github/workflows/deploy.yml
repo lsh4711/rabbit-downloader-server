@@ -25,9 +25,7 @@ jobs:
           path: ./docker.tar
 
 #      - run: sudo tar -xf ./docker.tar
-#      - run: ls -la
-#      - run: sudo ls docker
-#      - run: ls docker
+#      - run: sudo ls var/lib/docker
 
       - name: Start Docker daemon
         run: |
@@ -48,6 +46,6 @@ jobs:
           sleep 2
 
       - run: sudo chmod -R 777 /var/lib/docker
-      - run: sudo tar -cf ./docker.tar -C /var/lib/docker docker
+      - run: sudo tar -cf ./docker.tar /var/lib/docker
       - run: ls
 #      - run: sudo tar -zxvf aaa.tar.gz
