@@ -26,9 +26,9 @@ jobs:
 
       - run: sudo tar -xf ./docker.tar
       - run: ls -la
-      - run: ls var
-      - run: ls var/lib
-      - run: ls var/lib/docker
+      - run: sudo ls var
+      - run: sudo ls var/lib
+      - run: sudo ls var/lib/docker
       - run: ls docker
 
       - name: Start Docker daemon
