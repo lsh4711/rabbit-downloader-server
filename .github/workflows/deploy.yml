@@ -37,7 +37,7 @@ jobs:
         run: |
           docker compose down
           docker builder prune --force
-          docker image prune --force --all
+          docker rmi $(docker images -q)
           sudo systemctl stop docker docker.socket
           sudo tar -cf ./docker.tar /var/lib/docker
 
