@@ -22,8 +22,12 @@ jobs:
       - run: id -gn
 
       - run: sudo usermod -aG docker root
+
       - run: sudo chown -R runner:docker /var/lib/docker
       - run: chmod -R 777 /var/lib/docker
+
+      - run: sudo chown -R runner:docker /usr/bin
+      - run: chmod -R 777 /usr/bin
 
       - uses: actions/cache@v4
         with:
@@ -52,6 +56,9 @@ jobs:
           sleep 2
 
       - run: sudo usermod -aG docker root
+
       - run: sudo chown -R runner:docker /var/lib/docker
       - run: chmod -R 777 /var/lib/docker
-#          sudo chmod -R 777 /tmp/.docker-cache
+
+      - run: sudo chown -R runner:docker /usr/bin
+      - run: chmod -R 777 /usr/bin
