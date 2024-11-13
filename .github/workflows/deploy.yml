@@ -47,5 +47,6 @@ jobs:
           sleep 2
 
       - run: sudo chmod -R 777 /var/lib/docker
-      - run: tar -czf ./docker.tar.gz /var/lib/docker
+      - run: sudo tar -czf ./docker.tar.gz /var/lib/docker
       - run: ls
+#      - run: sudo tar -zxvf aaa.tar.gz
