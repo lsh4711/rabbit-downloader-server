@@ -22,11 +22,11 @@ jobs:
           restore-keys: ${{ runner.os }}-docker-cache-
           path: ./docker.tar
 
-#      - run: |
-#          sudo tar -xf ./docker.tar
-#          sudo rm -rf /var/lib/docker
-#          sudo mv var/lib/docker /var/lib/docker
-#          rm ./docker.tar
+      - run: |
+          sudo tar -xf ./docker.tar
+          sudo rm -rf /var/lib/docker
+          sudo mv var/lib/docker /var/lib/docker
+          rm ./docker.tar
 
       - name: Start Docker daemon
         run: |
