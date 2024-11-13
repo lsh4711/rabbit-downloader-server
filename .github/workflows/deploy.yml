@@ -10,7 +10,17 @@ jobs:
   deploy:
     runs-on: ubuntu-24.04
     steps:
+      - name: Stop Docker processes
+        run: |
+          sudo kill $(pidof dockerd) || true
+          sudo kill $(pidof containerd) || true
+          sleep 2
+
       - uses: actions/checkout@v4
+
+      - run: sudo rm -rf /var/lib/docker/{image,overlay2}
+      - run: mkdir -p /var/lib/docker/image
+      - run: mkdir -p /var/lib/docker/overlay2
 
       - uses: actions/cache@v4
         with:
@@ -19,12 +29,6 @@ jobs:
           path: |
             /var/lib/docker/image
             /var/lib/docker/overlay2
-
-      - name: Stop Docker processes
-        run: |
-          sudo kill $(pidof dockerd) || true
-          sudo kill $(pidof containerd) || true
-          sleep 2
 
       - name: Start Docker daemon
         run: |
@@ -37,5 +41,13 @@ jobs:
 
       - run: |
           docker images
+
+      - name: Stop Docker processes
+        run: |
+          sudo kill $(pidof dockerd) || true
+          sudo kill $(pidof containerd) || true
+          sleep 2
+
+
 #          sudo chmod -R 777 /tmp/.docker-cache
 
