@@ -10,20 +10,16 @@ services:
       timeout: 1s
       retries: 10
 
-  test:
-    build:
-      target: test-builder
-      cache_from:
-        - type=local,src=/tmp/.docker-cache
-      cache_to:
-        - type=local,dest=/tmp/.docker-cache-new,mode=max
-
-    depends_on:
-      test-db:
-        condition: service_healthy
-    init: true
-    ipc: host
-    entrypoint: [ npx, jest, --bail ]
+#  test:
+#    build:
+#      target: test-builder
+#      cache_from:
+#    depends_on:
+#      test-db:
+#        condition: service_healthy
+#    init: true
+#    ipc: host
+#    entrypoint: [ npx, jest, --bail ]
 
 #  server:
 #    build: .

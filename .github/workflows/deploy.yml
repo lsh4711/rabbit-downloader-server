@@ -42,9 +42,10 @@ jobs:
           sleep 2
           sudo dockerd --debug &
           sleep 2
-      - run: docker pull mysql:8.0.36
+
+      - run: docker compose up -d test-db --wait
+
       - run: |
           docker images
           sudo chmod -R 777 /tmp/.docker-cache
-          sudo chown -R $USER:$USER /tmp/.docker-cache
 
