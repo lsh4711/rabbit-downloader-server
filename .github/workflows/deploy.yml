@@ -18,14 +18,15 @@ jobs:
           restore-keys: ${{ runner.os }}-docker-cache-
           path: ./docker.tar
 
-      - name: restore docker
-        if: steps.cache.outputs.cache-matched-key != ''
-        run: |
-          sudo systemctl stop docker docker.socket
-          sudo tar -xf ./docker.tar
-          sudo rm -rf ./docker.tar /var/lib/docker 
-          sudo mv var/lib/docker /var/lib/docker
-          sudo systemctl start docker
+      - run: echo ${{ steps.cache-docker.outputs.cache-matched-key }}
+#      - name: restore docker
+#        if: steps.cache.outputs.cache-matched-key != ''
+#        run: |
+#          sudo systemctl stop docker
+#          sudo tar -xf ./docker.tar
+#          sudo rm -rf /var/lib/docker
+#          sudo mv var/lib/docker /var/lib/docker
+#          sudo systemctl start docker
 
       - run: |
           docker compose up -d test-db --wait
