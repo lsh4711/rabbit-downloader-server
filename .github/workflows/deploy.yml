@@ -21,6 +21,7 @@ jobs:
       - run: id -un
       - run: id -gn
 
+      - run: sudo usermod -aG docker root
       - run: sudo chown -R runner:docker /var/lib/docker
       - run: chmod -R 777 /var/lib/docker
 
@@ -50,6 +51,7 @@ jobs:
           sudo kill $(pidof containerd) || true
           sleep 2
 
+      - run: sudo usermod -aG docker root
       - run: sudo chown -R runner:docker /var/lib/docker
       - run: chmod -R 777 /var/lib/docker
 #          sudo chmod -R 777 /tmp/.docker-cache
