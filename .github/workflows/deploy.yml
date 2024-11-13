@@ -17,24 +17,14 @@ jobs:
           key: ${{ runner.os }}-docker-cache-${{ github.sha }}
           restore-keys: ${{ runner.os }}-docker-cache-
           path: |
-            /tmp/.docker-cache/image
-            /tmp/.docker-cache/overlay2
+            /var/lib/docker/image
+            /var/lib/docker/overlay2
 
       - name: Stop Docker processes
         run: |
           sudo kill $(pidof dockerd) || true
           sudo kill $(pidof containerd) || true
           sleep 2
-
-      - name: Configure Docker daemon
-        run: |
-          sudo mkdir -p /etc/docker
-          sudo tee /etc/docker/daemon.json > /dev/null <<EOF
-          {
-            "data-root": "/tmp/.docker-cache",
-            "storage-driver": "overlay2"
-          }
-          EOF
 
       - name: Start Docker daemon
         run: |
@@ -47,5 +37,5 @@ jobs:
 
       - run: |
           docker images
-          sudo chmod -R 777 /tmp/.docker-cache
+#          sudo chmod -R 777 /tmp/.docker-cache
 
