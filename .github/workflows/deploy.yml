@@ -25,7 +25,7 @@ jobs:
           path: ./docker.tar
 
       - run: sudo tar -xf ./docker.tar
-      - run: ls
+      - run: ls -la
       - run: ls docker
 
       - name: Start Docker daemon
