@@ -41,6 +41,7 @@ jobs:
 
       - name: Generate docker cache
         run: |
+          sudo docker compose down
           sudo systemctl stop docker docker.socket
           sudo tar -cf ./docker.tar /var/lib/docker
 
