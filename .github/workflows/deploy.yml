@@ -18,7 +18,7 @@ jobs:
           restore-keys: ${{ runner.os }}-docker-cache-
           path: ./docker.tar
 
-      - run: echo ${{ steps.cache-docker.outputs.cache-matched-key }}
+      - run: echo 123 ${{ steps.cache.outputs.cache-matched-key }}
 #      - name: restore docker
 #        if: steps.cache.outputs.cache-matched-key != ''
 #        run: |
