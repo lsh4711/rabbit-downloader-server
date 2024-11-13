@@ -49,7 +49,6 @@ jobs:
           sleep 2
 
       - run: docker pull mysql:8.0.36
-
       - run: |
           docker images
 #          sudo chown -R $USER:$USER ./.docker-cache
