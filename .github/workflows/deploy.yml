@@ -18,10 +18,10 @@ jobs:
           restore-keys: ${{ runner.os }}-docker-cache-
           path: ./docker.tar
 
-      - name: restore docker
+      - name: Restore docker
         if: hashFiles('./docker.tar') != ''
         run: |
-          sudo systemctl stop docker
+          sudo systemctl stop docker docker.socket
           sudo tar -xf ./docker.tar
           sudo rm -rf /var/lib/docker
           sudo mv var/lib/docker /var/lib/docker
@@ -31,7 +31,7 @@ jobs:
           docker compose up -d test-db --wait
           docker images
 
-      - name: generate docker cache
+      - name: Generate docker cache
         run: |
           sudo systemctl stop docker docker.socket
           sudo tar -cf ./docker.tar /var/lib/docker
