@@ -14,6 +14,7 @@ jobs:
 
       - run: |
           sudo mkdir -p ./.docker-cache/{image,overlay2}
+          
           sudo chown -R $USER:$USER ./.docker-cache
           sudo chmod -R 777 ./.docker-cache
 
