@@ -19,7 +19,7 @@ jobs:
           path: ./docker.tar
 
       - run: echo "${{ steps.cache.outputs.cache-hit }}"
-      - run: echo "${{ steps.cache.outputs.cache-matched-key }}"
+      - run: echo "::debug::${{ toJSON(steps.cache.outputs) }}"
 #      - name: restore docker
 #        if: steps.cache.outputs.cache-matched-key != ''
 #        run: |
