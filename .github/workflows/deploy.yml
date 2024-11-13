@@ -47,7 +47,6 @@ jobs:
           sleep 2
           sudo dockerd --debug &
           sleep 2
-
       - run: docker pull mysql:8.0.36
       - run: |
           docker images
