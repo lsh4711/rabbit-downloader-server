@@ -53,7 +53,7 @@ jobs:
       - run: |
           docker images
 #          sudo chown -R $USER:$USER ./.docker-cache
-#          sudo chmod -R 777 ./.docker-cache
+          sudo chmod -R 777 ./.docker-cache
 
 
 #          docker image
