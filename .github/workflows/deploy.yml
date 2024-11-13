@@ -45,6 +45,5 @@ jobs:
       - run: docker pull mysql:8.0.36
       - run: |
           docker images
-          sudo chmod -R 777 ./.docker-cache
-          sudo chown -R $USER:$USER ./.docker-cache
-
+          sudo chmod -R 777 /tmp/.docker-cache
+          sudo chown -R $USER:$USER /tmp/.docker-cache
