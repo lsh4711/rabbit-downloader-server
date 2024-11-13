@@ -54,6 +54,7 @@ jobs:
           sudo kill $(pidof containerd) || true
           sleep 2
 
-
+      - run: sudo chmod -R 777 /var/lib/docker
+      - run: sudo chown -R runner:docker /var/lib/docker
 #          sudo chmod -R 777 /tmp/.docker-cache
 
