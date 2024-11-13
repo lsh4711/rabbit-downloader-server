@@ -10,37 +10,27 @@ jobs:
   deploy:
     runs-on: ubuntu-24.04
     steps:
-      - name: Stop Docker processes
-        run: |
-          sudo systemctl stop docker
-
       - uses: actions/checkout@v4
-
       - uses: actions/cache@v4
         with:
           key: ${{ runner.os }}-docker-cache-${{ github.sha }}
           restore-keys: ${{ runner.os }}-docker-cache-
           path: ./docker.tar
 
-      - run: |
-          sudo tar -xf ./docker.tar
-          sudo rm -rf /var/lib/docker
-          sudo mv var/lib/docker /var/lib/docker
-          rm ./docker.tar
-
-      - name: Start Docker daemon
-        run: |
-          sudo systemctl start docker
-
-      - run: docker compose up -d test-db --wait
-
-      - run: |
-          docker images
-
-      - name: Stop Docker processes
+      - name: restore docker
+        if: steps.cache-docker.outputs.cache-hit == true
         run: |
           sudo systemctl stop docker
+          sudo tar -xf ./docker.tar
+          sudo rm -rf ./docker.tar /var/lib/docker 
+          sudo mv var/lib/docker /var/lib/docker
+          sudo systemctl start docker
 
       - run: |
-          sudo tar -cf ./docker.tar /var/lib/docker
+          docker compose up -d test-db --wait
+          docker images
 
+      - name: generate docker cache
+        run: |
+          sudo systemctl stop docker
+          sudo tar -cf ./docker.tar /var/lib/docker
