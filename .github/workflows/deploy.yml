@@ -28,7 +28,6 @@ jobs:
 #          sudo mv var/lib/docker /var/lib/docker
 #          rm ./docker.tar
 
-
       - name: Start Docker daemon
         run: |
           sudo systemctl start docker
