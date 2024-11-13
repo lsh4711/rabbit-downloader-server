@@ -18,7 +18,7 @@ jobs:
 
       - uses: actions/checkout@v4
 
-      - run: chmod -R 777 /var/lib/docker
+      - run: sudo chmod -R 777 /var/lib/docker
 
       - uses: actions/cache@v4
         with:
@@ -46,6 +46,6 @@ jobs:
           sudo kill $(pidof containerd) || true
           sleep 2
 
-      - run: chmod -R 777 /var/lib/docker
+      - run: sudo chmod -R 777 /var/lib/docker
       - run: tar -czf ./docker.tar.gz /var/lib/docker
       - run: ls
