@@ -24,7 +24,7 @@ jobs:
           restore-keys: ${{ runner.os }}-docker-cache-
           path: ./docker.tar
 
-      - run: tar -xf ./docker.tar
+      - run: sudo tar -xf ./docker.tar
       - run: ls
       - run: ls docker
 
