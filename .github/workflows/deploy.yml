@@ -24,6 +24,10 @@ jobs:
           restore-keys: ${{ runner.os }}-docker-cache-
           path: ./docker.tar
 
+      - run: tar -xf ./docker.tar
+      - run: ls
+      - run: ls docker
+
       - name: Start Docker daemon
         run: |
           sudo containerd &
@@ -44,5 +48,5 @@ jobs:
 
       - run: sudo chmod -R 777 /var/lib/docker
       - run: sudo tar -cf ./docker.tar /var/lib/docker
-      - run: du -lh
+      - run: ls
 #      - run: sudo tar -zxvf aaa.tar.gz
