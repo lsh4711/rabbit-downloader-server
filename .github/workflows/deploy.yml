@@ -40,3 +40,4 @@ jobs:
           docker image prune --force --all
           sudo systemctl stop docker docker.socket
           sudo tar -cf ./docker.tar /var/lib/docker
+
