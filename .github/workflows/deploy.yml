@@ -18,6 +18,9 @@ jobs:
 
       - uses: actions/checkout@v4
 
+      - run: id -un
+      - run: id -gn
+
       - run: sudo chmod -R 777 /var/lib/docker
       - run: rm -rf /var/lib/docker/{image,overlay2}
       - run: mkdir -p /var/lib/docker/image
