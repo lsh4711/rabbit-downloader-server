@@ -28,6 +28,8 @@ jobs:
 #          sudo tar -xf ./docker.tar
 #          sudo rm -rf /var/lib/docker
 #          sudo mv var/lib/docker /var/lib/docker
+#          rm ./docker.tar
+
 
       - name: Start Docker daemon
         run: |
@@ -48,5 +50,4 @@ jobs:
           sleep 2
 
       - run: |
-          rm ./docker.tar
           sudo tar -cf ./docker.tar /var/lib/docker
