@@ -34,7 +34,7 @@ jobs:
           sudo mkdir -p /etc/docker
           sudo tee /etc/docker/daemon.json > /dev/null <<EOF
           {
-            "data-root": "${{ github.workspace }}/test/docker",
+            "data-root": "${{ github.workspace }}/.docker-cache",
             "storage-driver": "overlay2"
           }
           EOF
