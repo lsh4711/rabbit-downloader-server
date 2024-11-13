@@ -43,27 +43,27 @@ COPY env/test/mikro-orm.config.ts env/test/
 COPY env/test/.env.ci env/test/.env
 COPY test test
 
-#FROM app-base AS app-builder
-#
-#ARG NODE_ENV
-#
-#COPY nest-cli.json .
-#COPY env/${NODE_ENV}/mikro-orm.config.ts env/${NODE_ENV}/
-#
-#RUN npx nest build \
-#    && npm prune --production \
-#    && rm \
-#    dist/tsconfig.build.tsbuildinfo \
-#    tsconfig.json \
-#    tsconfig.build.json \
-#    nest-cli.json \
-#    package-lock.json
-#
-##Reduced from 2.5+ GB to 1.20 GB
-#FROM playwright-builder AS app
-#
-#ARG NODE_ENV
-#ENV NODE_ENV=${NODE_ENV}
-#WORKDIR /app
-#
-#COPY --from=app-builder /app .
+FROM app-base AS app-builder
+
+ARG NODE_ENV
+
+COPY nest-cli.json .
+COPY env/${NODE_ENV}/mikro-orm.config.ts env/${NODE_ENV}/
+
+RUN npx nest build \
+    && npm prune --production \
+    && rm \
+    dist/tsconfig.build.tsbuildinfo \
+    tsconfig.json \
+    tsconfig.build.json \
+    nest-cli.json \
+    package-lock.json
+
+#Reduced from 2.5+ GB to 1.20 GB
+FROM playwright-builder AS app
+
+ARG NODE_ENV
+ENV NODE_ENV=${NODE_ENV}
+WORKDIR /app
+
+COPY --from=app-builder /app .

@@ -27,9 +27,17 @@ jobs:
           sudo mv var/lib/docker /var/lib/docker
           sudo systemctl start docker
 
-      - run: |
-          docker compose up -d test-db --wait
-          docker images
+      - run: docker images && docker ps -a
+
+      - name: Test
+        run: docker compose up test --build
+
+      - run: docker images && docker ps -a
+
+      - name: Build production app
+        run: docker compose up test --build
+
+      - run: docker images && docker ps -a
 
       - name: Generate docker cache
         run: |
