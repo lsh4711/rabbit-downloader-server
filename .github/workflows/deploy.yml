@@ -44,4 +44,3 @@ jobs:
           sudo docker compose down
           sudo systemctl stop docker docker.socket
           sudo tar -cf ./docker.tar /var/lib/docker
-
