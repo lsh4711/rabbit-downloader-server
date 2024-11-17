@@ -33,7 +33,7 @@ jobs:
         run: docker compose up test --build
 
       - name: Build and push production server
-        run: docker compose push server --build
+        run: docker compose build server --push
 
       - name: Generate docker cache
         run: |
