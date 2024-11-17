@@ -4,7 +4,7 @@ on:
   push:
     branches:
       # - main
-       - develop
+      - develop
 #      - test
 
 jobs:
@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-24.04
     env:
       REGISTRY_ENDPOINT: ${{ secrets.REGISTRY_ENDPOINT }}
+      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+      REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/cache@v4
@@ -32,6 +34,13 @@ jobs:
       - name: Test
         run: docker compose up test --build
 
+      - name: Login registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${ REGISTRY_ENDPOINT }
+          username: ${ REGISTRY_USERNAME }
+          password: ${ REGISTRY_PASSWORD }
+
       - name: Build and push production server
         run: docker compose build server --push
 
@@ -43,12 +52,6 @@ jobs:
           sudo systemctl stop docker docker.socket
           sudo tar -cf ./docker.tar /var/lib/docker
 
-#      - name: cd
-#        uses: docker/login-action@v3
-#        with:
-#          username: test
-#          password: test
-#          registry: test
-#          logout: true
+
 
 
