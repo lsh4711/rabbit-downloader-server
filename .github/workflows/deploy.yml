@@ -26,6 +26,7 @@ jobs:
           sudo systemctl stop docker docker.socket
           sudo rm -rf /var/lib/docker
           sudo tar -xf ./docker.tar -C /
+          sudo systemctl start docker
 
       - name: Test
         run: |
