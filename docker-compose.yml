@@ -22,7 +22,7 @@ services:
 
   server:
     build: .
-    image: localhost:5000/rabbit-server-nest:1.12
+    image: ${REGISTRY_ENDPOINT}/rabbit-server-nest:1.12
     container_name: rabbit-server-nest
     ipc: host
     ports: [ "8080:8080" ]

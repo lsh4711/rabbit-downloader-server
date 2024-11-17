@@ -10,8 +10,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-24.04
-#    env:
-#      REGISTRY_ENDPOINT: ${{ secrets.REGISTRY_ENDPOINT }}
+    env:
+      REGISTRY_ENDPOINT: ${{ secrets.REGISTRY_ENDPOINT }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/cache@v4
@@ -20,7 +20,7 @@ jobs:
           restore-keys: ${{ runner.os }}-docker-cache-
           path: ./docker.tar
 
-      - name: Restore docker
+      - name: Restore docker cache
         if: hashFiles('./docker.tar') != ''
         run: |
           sudo systemctl stop docker docker.socket
@@ -32,8 +32,8 @@ jobs:
       - name: Test
         run: docker compose up test --build
 
-      - name: Build production server
-        run: docker compose build server
+      - name: Build and push production server
+        run: docker compose push server -- build
 
       - name: Generate docker cache
         run: |
