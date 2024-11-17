@@ -45,7 +45,6 @@ jobs:
 
       - name: Generate docker cache
         run: |
-          docker compose down
           docker image prune --force
           docker builder prune --force
           sudo systemctl stop docker docker.socket
