@@ -30,7 +30,7 @@ jobs:
 
       - name: Test
         run: |
-          docker compose up -d test-test
+          docker compose up -d test-db
           docker compose up test --build
           docker compose down
 
