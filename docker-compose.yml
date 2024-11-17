@@ -28,4 +28,3 @@ services:
     ports: [ "8080:8080" ]
     volumes: [ ./env/production/.env:/app/env/production/.env ]
     entrypoint: [ node, dist/src/main ]
-
