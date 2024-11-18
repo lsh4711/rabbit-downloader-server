@@ -12,6 +12,7 @@ services:
 
   test:
     build:
+      dockerfile: deploy/Dockerfile-server
       target: test-builder
     depends_on:
       test-db:
@@ -20,11 +21,33 @@ services:
     ipc: host
     entrypoint: [ npx, jest, --bail ]
 
-  server:
-    build: .
+  server: &server
+    build:
+      dockerfile: deploy/Dockerfile-server
     image: ${REGISTRY_ENDPOINT}/rabbit-server-nest:1.12
-    container_name: rabbit-server-nest
     ipc: host
-    ports: [ "8080:8080" ]
     volumes: [ ./env/production/.env:/app/env/production/.env ]
     entrypoint: [ node, dist/src/main ]
+
+  server-dev:
+    <<: *server
+    container_name: rabbit-server-nest-dev
+    ports: [ "8080:8080" ]
+
+  server1:
+    <<: *server
+    container_name: rabbit-server-nest-1
+
+  server2:
+    <<: *server
+    container_name: rabbit-server-nest-2
+
+  nginx:
+    build:
+      dockerfile: deploy/Dockerfile-nginx
+    image: ${REGISTRY_ENDPOINT}/rabbit-nginx
+    container_name: rabbit-nginx
+    environment:
+      SERVER_ENDPOINT: server
+      NGINX_ENVSUBST_FILTER: ^SERVER_ENDPOINT$
+#    ports: [ "8080:8080" ]e
