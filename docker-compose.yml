@@ -28,6 +28,12 @@ services:
     ipc: host
     volumes: [ ./env/production/.env:/app/env/production/.env ]
     entrypoint: [ node, dist/src/main ]
+    healthcheck:
+      test: curl localhost:${SERVER_PORT}/api/health -I
+      start_period: 10s
+      start_interval: 1s
+      interval: 1m
+      timeout: 1s
 
   server-dev:
     <<: *server
@@ -47,7 +53,36 @@ services:
       dockerfile: deploy/Dockerfile-nginx
     image: ${REGISTRY_ENDPOINT}/rabbit-nginx
     container_name: rabbit-nginx
+    volumes: [ ./acme/:/mount/ ]
     environment:
-      SERVER_ENDPOINT: server
-      NGINX_ENVSUBST_FILTER: ^SERVER_ENDPOINT$
-#    ports: [ "8080:8080" ]e
+      SERVER_DOMAIN: ${SERVER_DOMAIN}
+      SERVER_HOST: ${SERVER_HOST}
+      SERVER_PORT: ${SERVER_PORT}
+      NGINX_ENVSUBST_FILTER: ^(SERVER_DOMAIN|SERVER_HOST|SERVER_PORT)$
+    #    ports: [ "8080:8080" ]
+    healthcheck:
+      test: wget localhost --spider
+      start_period: 10s
+      start_interval: 1s
+      interval: 1m
+      timeout: 1s
+
+  acme:
+    image: neilpang/acme.sh
+    volumes: [ ./acme/:/acme.sh/ ]
+    networks: [ ip6net ]
+    environment:
+      DuckDNS_Token: ${DuckDNS_Token}
+    command: [ "ls" ]
+    entrypoint: [
+      "/bin/sh", "-c",
+      "cp /acme.sh/dns_duckdns.sh /root/.acme.sh/dnsapi/ \
+      && acme.sh --issue --dns dns_duckdns -d ${SERVER_DOMAIN} --server letsencrypt --debug 2"
+    ]
+
+networks:
+  ip6net:
+    enable_ipv6: true
+    ipam:
+      config:
+        - subnet: fd00:cafe:face:feed::/64
