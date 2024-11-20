@@ -54,6 +54,7 @@ services:
     image: ${REGISTRY_ENDPOINT}/rabbit-nginx
     container_name: rabbit-nginx
     volumes: [ ./acme/:/mount/ ]
+    ports: [ "443:443" ]
     environment:
       SERVER_DOMAIN: ${SERVER_DOMAIN}
       SERVER_HOST: ${SERVER_HOST}

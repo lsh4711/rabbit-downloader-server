@@ -11,7 +11,7 @@ FROM ubuntu:noble AS node-builder
 ARG NODE_VERSION
 WORKDIR /node
 
-RUN apt-get update && apt install --yes --no-install-recommends \
+RUN apt update && apt install --yes --no-install-recommends \
     curl  \
     ca-certificates  \
     xz-utils \
@@ -26,6 +26,7 @@ ARG PLAYWRIGHT_VERSION
 
 COPY --from=node-builder /node /usr
 RUN npx playwright@${PLAYWRIGHT_VERSION} install chromium --with-deps \
+    && apt install curl --yes --no-install-recommends \
     && rm -rf ~/.npm /var/lib/apt/lists/*
 
 FROM playwright-builder AS app-base
