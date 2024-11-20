@@ -12,7 +12,7 @@ server {
     ssl_stapling on;
     ssl_stapling_verify on;
     ssl_trusted_certificate /mount/${SERVER_DOMAIN}_ecc/fullchain.cer;
-    resolver 8.8.8.8 8.8.4.4;
+    resolver [2001:4860:4860::8888] [2001:4860:4860::8844];
 
     location / {
         proxy_pass http://${SERVER_HOST}:${SERVER_PORT};
