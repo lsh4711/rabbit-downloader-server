@@ -3,8 +3,7 @@ name: deploy
 on:
   push:
     branches:
-      # - main
-      - develop
+       - main
 
 jobs:
   ci:
@@ -48,9 +47,3 @@ jobs:
           docker builder prune --force
           sudo systemctl stop docker docker.socket
           sudo tar -cf ./docker.tar /var/lib/docker
-
-#  cd:
-#    needs: ci
-#    runs-on: ubuntu-24.04s
-#    steps:
-#      - run: ls
