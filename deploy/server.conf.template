@@ -17,6 +17,10 @@ server {
         proxy_pass http://${SERVER_HOST}:${SERVER_PORT}/;
     }
 
+    location = / {
+            proxy_pass http://${SERVER_HOST}:${SERVER_PORT};
+    }
+
     location / {
         proxy_pass http://${SERVER_HOST}:${SERVER_PORT};
     }
