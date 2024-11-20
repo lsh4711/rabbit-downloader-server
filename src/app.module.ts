@@ -6,6 +6,7 @@ import { APP_PIPE } from '@nestjs/core';
 import { ScheduleModule } from '@nestjs/schedule';
 import { AppController } from './app.controller';
 import { BookmarkModule } from './bookmark/bookmark.module';
+import { CaptchaModule } from './captcha/captcha.module';
 import { DownloadModule } from './download/download.module';
 import { MemberModule } from './member/member.module';
 import { NoticeModule } from './notice/notice.module';
@@ -19,6 +20,7 @@ import { NoticeModule } from './notice/notice.module';
     NoticeModule,
     BookmarkModule,
     DownloadModule,
+    CaptchaModule,
   ],
   controllers: [AppController],
   providers: [
