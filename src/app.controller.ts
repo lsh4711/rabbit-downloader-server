@@ -8,6 +8,12 @@ export class AppController {
   constructor(private readonly orm: MikroORM) {}
 
   @Public({ skipAuth: true })
+  @Get()
+  home() {
+    // for ssllabs test
+  }
+
+  @Public({ skipAuth: true })
   @Get('health')
   @Timeout(0)
   async healthCheck() {
