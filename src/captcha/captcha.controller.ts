@@ -31,8 +31,6 @@ export class CaptchaController {
     const formData = new FormData();
     formData.append('image', blob);
 
-    const captcha = await this.captchaService.sendRecognizeRequest(formData);
-
-    return { result: captcha };
+    return this.captchaService.sendRecognizeRequest(formData);
   }
 }
