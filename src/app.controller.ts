@@ -8,7 +8,7 @@ export class AppController {
   constructor(private readonly orm: MikroORM) {}
 
   @Public({ skipAuth: true })
-  @Get()
+  @Get('home')
   home() {
     // for ssllabs test
   }

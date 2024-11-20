@@ -18,7 +18,7 @@ server {
     }
 
     location = / {
-            proxy_pass http://${SERVER_HOST}:${SERVER_PORT}/api;
+            proxy_pass http://${SERVER_HOST}:${SERVER_PORT}/api/home;
     }
 
     location / {
