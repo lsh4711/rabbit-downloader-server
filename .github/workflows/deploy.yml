@@ -40,7 +40,7 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
       - name: Build and push production server
-        run: docker compose build server --push
+        run: docker compose build nginx server --push
 
       - name: Generate docker cache
         run: |
