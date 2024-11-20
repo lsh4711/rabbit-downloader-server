@@ -13,8 +13,8 @@ server {
     ssl_trusted_certificate /mount/${SERVER_DOMAIN}_ecc/fullchain.cer;
     resolver [2001:4860:4860::8888] [2001:4860:4860::8844] ipv4=off;
 
-    location /v1.12 {
-        proxy_pass http://${SERVER_HOST}:${SERVER_PORT};
+    location /v1.12/ {
+        proxy_pass http://${SERVER_HOST}:${SERVER_PORT}/;
     }
 
     location / {
