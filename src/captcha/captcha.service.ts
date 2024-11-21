@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class CaptchaService {
-  private captchaServerUrl = `http://${process.env.CAPTCHA_SERVER_HOST}:5000/captcha/predict`;
+  private captchaServerUrl = process.env.CAPTCHA_SERVER_URL!;
 
   async sendRecognizeRequest(formData: FormData) {
     return fetch(this.captchaServerUrl, {
