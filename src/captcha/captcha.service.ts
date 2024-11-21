@@ -10,7 +10,7 @@ export class CaptchaService {
       body: formData,
     }).then((r) => {
       if (!r.ok) {
-        throw new Error('Failed to upload image');
+        throw new Error('Failed to recognize image');
       }
       return r.text();
     });
