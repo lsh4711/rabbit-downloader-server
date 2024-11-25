@@ -2,6 +2,9 @@ server {
     listen [::]:443 ssl;
     server_name ${SERVER_DOMAIN};
 
+    client_body_buffer_size 1m;
+    client_max_body_size 1m;
+
     ssl_certificate /mount/${SERVER_DOMAIN}_ecc/fullchain.cer;
     ssl_certificate_key /mount/${SERVER_DOMAIN}_ecc/${SERVER_DOMAIN}.key;
 
