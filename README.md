@@ -1,11 +1,13 @@
 # rabbit-downloader
-![chromewebstore](https://github.com/user-attachments/assets/472d7264-eb87-4ec7-b277-87c4cdc140e2)
+
+<img alt="chromewebstore" src="https://github.com/user-attachments/assets/472d7264-eb87-4ec7-b277-87c4cdc140e2" width="50%">
 
 ---
 
 ## Stacks
 
 ### Server
+
 | Nest.js | Typescript | MikroORM | MySQL | Playwright |
 |:-------:|:----------:|:--------:|:-----:|:----------:|
 
@@ -16,16 +18,19 @@
 |:--------------:|:--------------:|:---------------:|:-----------------:|
 
 #### - Middle Ware
+
 | Cloudflare |
 |:----------:|
 
 ### Other repository
 
 #### - Client (Chrome Extension)
+
 | React | Typescript | CRXjs | 
 |:-----:|:----------:|:-----:|
 
 #### - Captcha Recognize Server
+
 | Flask | Python | Pytorch |
 |:-----:|:------:|:--------|
 
