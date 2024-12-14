@@ -14,8 +14,8 @@
 ### Infra
 
 #### - CI / CD
-| Github Actions | Docker Compose | Docker Registry | AWS EC2 Free Tier(t2.micro) |
-|:--------------:|:--------------:|:---------------:|:---------------------------:|
+| Github Actions | Docker Compose | Docker Registry | AWS EC2 (t2.micro) | AWS RDS(t4g.micro) | 
+|:--------------:|:--------------:|:---------------:|:------------------:|:------------------:|
 
 #### - Middle Ware
 
