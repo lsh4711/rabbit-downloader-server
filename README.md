@@ -14,8 +14,8 @@
 ### Infra
 
 #### - CI / CD
-| Github Actions | Docker Compose | Docker Registry | AWS EC2(Prettier) |
-|:--------------:|:--------------:|:---------------:|:-----------------:|
+| Github Actions | Docker Compose | Docker Registry | AWS EC2 Free Tier(t2.micro) |
+|:--------------:|:--------------:|:---------------:|:---------------------------:|
 
 #### - Middle Ware
 
@@ -26,7 +26,7 @@
 
 #### - Client (Chrome Extension)
 
-| React | Typescript | CRXjs | 
+| React | Typescript | CRXJS | 
 |:-----:|:----------:|:-----:|
 
 #### - Captcha Recognize Server
@@ -38,6 +38,11 @@
 
 ## Docs
 
-### ERD
+### - ERD
 
-### API spec
+![rabbit-downloader-erd](https://github.com/user-attachments/assets/644709e2-136c-4940-9462-235b2fbe6a31)
+
+### - API spec
+
+swagger:  
+scalar:
