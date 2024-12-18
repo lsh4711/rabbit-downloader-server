@@ -42,7 +42,3 @@
 
 ![rabbit-downloader-erd](https://github.com/user-attachments/assets/644709e2-136c-4940-9462-235b2fbe6a31)
 
-### - API spec
-
-swagger:  
-scalar:
